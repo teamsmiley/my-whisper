@@ -3,5 +3,10 @@
 ## build
 
 ```sh
-docker build -t whisper .
+docker-compose up --build
 ```
+
+## reference
+
+- https://oomacorp.atlassian.net/wiki/spaces/DEV/pages/317654328/Enable+GPU+acceleration+with+container+services
+- https://cloud.google.com/compute/docs/gpus?hl=ko
