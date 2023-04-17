@@ -1,0 +1,20 @@
+version: '3.5'
+services:
+  whisper:
+    image: nexus.voxter.net/whisper-asr/nvidia:v1.0.2.1-beta
+    restart: always
+    ports:
+      - 9000:9000
+    environment:
+      ASR_MODEL: base
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: 200m
+        max-file: '3'
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: 'nvidia'
+              capabilities: [gpu]
