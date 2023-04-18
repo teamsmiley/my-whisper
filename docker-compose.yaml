@@ -13,4 +13,4 @@ services:
           devices:
             - driver: 'nvidia'
               capabilities: [gpu]
-              count: 1
+              # count: 1
