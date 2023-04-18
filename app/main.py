@@ -11,9 +11,9 @@ else:
 
 print("lets start read file ")
 
-# model = whisper.load_model("tiny")
+model = whisper.load_model("tiny")
 # model = whisper.load_model("base")
-model = whisper.load_model("small")
+# model = whisper.load_model("small")
 #model = whisper.load_model("medium")
 #model = whisper.load_model("large-v2")
 result = model.transcribe("audio.mp3")
