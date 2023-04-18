@@ -5,7 +5,8 @@ services:
     volumes:
       - ./app:/app
     working_dir: /app
-    command: python3 main.py
+    # command: python3 main.py
+    command: whisper --help | findstr -i pytorch
     deploy:
       resources:
         reservations:
