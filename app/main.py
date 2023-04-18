@@ -1,5 +1,4 @@
 import whisper
-
 import torch
 
 if torch.cuda.is_available():
