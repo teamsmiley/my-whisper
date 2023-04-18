@@ -11,8 +11,8 @@ else:
 
 print("lets load module") 
 # model = whisper.load_model("tiny") 
-# model = whisper.load_model("base") 
-model = whisper.load_model("small")
+model = whisper.load_model("base")
+# model = whisper.load_model("small")
 # model = whisper.load_model("medium")
 # model = whisper.load_model("large-v2") 
 start = time.time()
