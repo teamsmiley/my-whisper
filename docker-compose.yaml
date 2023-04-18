@@ -6,7 +6,7 @@ services:
       - ./app:/app
     working_dir: /app
     # command: python3 main.py
-    command: whisper --help | findstr -i pytorch
+    command: whisper --help | grep -i pytorch
     deploy:
       resources:
         reservations:
