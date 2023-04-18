@@ -6,17 +6,17 @@ services:
       - ./app:/app
     working_dir: /app
     command: python3 main.py
-    logging:
-      driver: 'json-file'
-      options:
-        max-size: 200m
-        max-file: '3'
-    runtime: nvidia
-    environment:
-      - CUDA_VISIBLE_DEVICES=all
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: 'nvidia'
-              capabilities: [gpu]
+    # logging:
+    #   driver: 'json-file'
+    #   options:
+    #     max-size: 200m
+    #     max-file: '3'
+    # runtime: nvidia
+    # environment:
+    #   - CUDA_VISIBLE_DEVICES=all
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: 'nvidia'
+    #           capabilities: [gpu]
