@@ -5,8 +5,8 @@ services:
     volumes:
       - ./app:/app
     working_dir: /app
-    # command: python3 main.py
-    command: whisper --help
+    command: python3 main.py
+    # command: whisper --help
     deploy:
       resources:
         reservations:
