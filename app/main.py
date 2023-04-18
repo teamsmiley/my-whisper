@@ -17,6 +17,7 @@ print("lets load module")
 # model = whisper.load_model("medium")
 model = whisper.load_model("large-v2")
 start = time.time()
+
 # result = model.transcribe("audio-kr.mp3")
 # print(result["text"])
 # end = time.time()
@@ -36,7 +37,7 @@ print(f"Detected language: {max(probs, key=probs.get)}")
 # decode the audio
 options = whisper.DecodingOptions()
 result = whisper.decode(model, mel, options)
-
+print(result["text"])
 
 end = time.time()
 print("The time of execution of above program is :", (end-start) * 1000, "ms")
