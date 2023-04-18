@@ -1,5 +1,6 @@
 import whisper
 import torch
+import time
 
 if torch.cuda.is_available():
     device = torch.device("cuda")
@@ -9,7 +10,7 @@ else:
     print("Using CPU")
 
 print("lets start read file ")
-
+start = time.time()
 # model = whisper.load_model("tiny")
 # model = whisper.load_model("base")
 # model = whisper.load_model("small")
@@ -17,3 +18,6 @@ model = whisper.load_model("medium")
 # model = whisper.load_model("large-v2")
 result = model.transcribe("audio.mp3")
 print(result["text"])
+end = time.time()
+print("The time of execution of above program is :",
+      (end-start) * 1000, "ms")
