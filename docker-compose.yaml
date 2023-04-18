@@ -6,11 +6,10 @@ services:
       - ./app:/app
     working_dir: /app
     command: python3 main.py
-    # command: whisper --help
     deploy:
       resources:
         reservations:
           devices:
             - driver: 'nvidia'
-              count: 1
+              # count: 1
               capabilities: [gpu]
