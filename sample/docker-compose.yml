@@ -1,6 +1,6 @@
 version: '3.5'
 services:
-  test:
+  whisper:
     image: nvidia/cuda:10.2-base
     command: nvidia-smi
     deploy:
@@ -9,22 +9,4 @@ services:
           devices:
             - driver: nvidia
               count: 1
-              capabilities: [gpu]
-  whisper:
-    image: nvidia/cuda:10.2-base
-    restart: always
-    ports:
-      - 9000:9000
-    environment:
-      ASR_MODEL: base
-    logging:
-      driver: 'json-file'
-      options:
-        max-size: 200m
-        max-file: '3'
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: 'nvidia'
               capabilities: [gpu]
