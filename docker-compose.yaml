@@ -1,11 +1,11 @@
 version: "3.9"
 services:
-  my-whisper:
-    # build: .
-    image: test
-    volumes:
-      - ./app:/app
-    working_dir: /app
+  whisper:
+    build: .
+    # image: test
+    # volumes:
+    #   - ./app:/app
+    # working_dir: /app
     command: python3 main.py
     deploy:
       resources:
