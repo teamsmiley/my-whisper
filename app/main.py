@@ -10,14 +10,13 @@ else:
     print("Using CPU")
 
 print("lets load module")
-# model = whisper.load_model("tiny") #5sec
-model = whisper.load_model("base")
-# model = whisper.load_model("small")
+# model = whisper.load_model("tiny") # download 13 sec , transcribe: 5 sec
+# model = whisper.load_model("base") # download 8 sec , transcribe: 6.2 sec
+model = whisper.load_model("small")
 # model = whisper.load_model("medium")
 # model = whisper.load_model("large-v2")
 start = time.time()
 result = model.transcribe("audio.mp3")
 print(result["text"])
 end = time.time()
-print("The time of execution of above program is :",
-      (end-start) * 1000, "ms")
+print("The time of execution of above program is :", (end-start) * 1000, "ms")
