@@ -37,7 +37,7 @@ print(f"Detected language: {max(probs, key=probs.get)}")
 # decode the audio
 options = whisper.DecodingOptions()
 result = whisper.decode(model, mel, options)
-print(result["text"])
+print(result)
 
 end = time.time()
 print("The time of execution of above program is :", (end-start) * 1000, "ms")
