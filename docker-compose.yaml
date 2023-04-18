@@ -1,7 +1,7 @@
 version: "3.9"
 services:
   whisper:
-    build: .
+    # build: .
     # image: whisper:0.1
     command: python3 main.py
     deploy:
