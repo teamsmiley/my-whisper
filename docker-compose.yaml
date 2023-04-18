@@ -3,6 +3,8 @@ services:
   whisper:
     build: .
     # image: whisper:0.1
+    volumes:
+      - hostPath:containerPath:ro
     command: python3 main.py
     deploy:
       resources:
