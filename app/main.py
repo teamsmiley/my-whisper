@@ -25,7 +25,7 @@ start = time.time()
 
 # load audio and pad/trim it to fit 30 seconds
 audio = whisper.load_audio("audio-kr.mp3")
-audio = whisper.pad_or_trim(audio)
+# audio = whisper.pad_or_trim(audio)
 
 # make log-Mel spectrogram and move to the same device as the model
 mel = whisper.log_mel_spectrogram(audio).to(model.device)
@@ -37,7 +37,7 @@ print(f"Detected language: {max(probs, key=probs.get)}")
 # decode the audio
 options = whisper.DecodingOptions()
 result = whisper.decode(model, mel, options)
-print(result)
+print(result.result)
 
 end = time.time()
 print("The time of execution of above program is :", (end-start) * 1000, "ms")
