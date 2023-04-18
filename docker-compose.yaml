@@ -5,7 +5,6 @@ services:
     # image: whisper:0.1
     volumes:
       - ./cache:~/.cache/whisper:ro
-
     command: python3 main.py
     deploy:
       resources:
