@@ -8,7 +8,6 @@ else:
     device = torch.device("cpu")
     print("Using CPU")
 
-
 print("lets start read file ")
 
 # model = whisper.load_model("tiny")
