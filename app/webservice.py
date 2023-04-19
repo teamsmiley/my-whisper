@@ -5,6 +5,7 @@ from fastapi.openapi.docs import get_swagger_ui_html
 import whisper
 from whisper.utils import ResultWriter, WriteTXT, WriteSRT, WriteVTT, WriteTSV, WriteJSON
 from whisper import tokenizer
+
 import os
 from os import path
 from pathlib import Path
@@ -25,14 +26,7 @@ app = FastAPI(
     title=projectMetadata['Name'].title().replace('-', ' '),
     description=projectMetadata['Summary'],
     version=projectMetadata['Version'],
-    contact={
-        "url": projectMetadata['Home-page']
-    },
     swagger_ui_parameters={"defaultModelsExpandDepth": -1},
-    license_info={
-        "name": "MIT License",
-        "url": projectMetadata['License']
-    }
 )
 
 assets_path = fastapi_offline_swagger_ui.__path__[0]

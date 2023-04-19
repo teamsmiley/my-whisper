@@ -2,7 +2,6 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-
 @app.get("/")
-def  index() -> dict:
-    return {"message": "Hello World"}
+def read_root():
+  return {"Hello": "World"}
