@@ -10,10 +10,6 @@ RUN pip install "uvicorn[standard]" gunicorn
 
 WORKDIR /app
 
-COPY ./requirements.txt /app/requirements.txt
-
-# RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
-
 COPY app/ /app/
 
 ENTRYPOINT ["gunicorn", "--bind", "0.0.0.0:9000", "--workers", "1", "--timeout", "0", "app.webservice:app", "-k", "uvicorn.workers.UvicornWorker"]
