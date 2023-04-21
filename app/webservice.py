@@ -99,8 +99,7 @@ def language_detection(
         _, probs = model.detect_language(mel)
     detected_lang_code = max(probs, key=probs.get)
     
-    result = { "detected_language": tokenizer.LANGUAGES[detected_lang_code],
-              "language_code" : detected_lang_code }
+    result = { "detected_language": tokenizer.LANGUAGES[detected_lang_code],"language_code" : detected_lang_code }
 
     return result
 

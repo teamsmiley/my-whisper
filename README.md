@@ -25,3 +25,9 @@ from 2:50 sec mp3 file
 | small    | 460M       | 7 sec      |
 | medium   | 1.4G       | 13 sec     |
 | large-v2 | 2.9G       | 17 sec     |
+
+## create code
+
+```sh
+pip freeze > requirements.txt
+```
