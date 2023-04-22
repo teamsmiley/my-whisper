@@ -6,13 +6,13 @@ RUN apt update
 RUN apt install ffmpeg -y
 RUN pip install --upgrade pip
 
-# RUN pip install -U openai-whisper
-# RUN pip install fastapi[all] 
-# RUN pip install "uvicorn[standard]" gunicorn
+RUN pip install -U openai-whisper
+RUN pip install fastapi[all] 
+RUN pip install "uvicorn[standard]" gunicorn
 
-COPY ./requirements.txt /code/requirements.txt
+# COPY ./requirements.txt /code/requirements.txt
 
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+# RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
 COPY ./app /code/app
 
