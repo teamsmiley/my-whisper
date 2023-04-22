@@ -8,11 +8,11 @@ services:
     ports:
       - "80:80"
     environment:
-      # - ASR_MODEL=tiny
+      - ASR_MODEL=tiny
       # - ASR_MODEL=base
       # - ASR_MODEL=small
       # - ASR_MODEL=medium
-      - ASR_MODEL=large
+      # - ASR_MODEL=large
     deploy: # gpu사용시 주석해제
       resources:
         reservations:

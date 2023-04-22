@@ -8,7 +8,6 @@ from threading import Lock
 from typing import BinaryIO
 from fastapi.responses import StreamingResponse, RedirectResponse
 
-print 
 app = FastAPI()
 
 SAMPLE_RATE=16000
@@ -31,6 +30,7 @@ model_lock = Lock()
 print("Device Type:", deviceType)
 if(deviceType == "GPU"):
     print("Device Name:", deviceName)
+
 
 # asr : Automatic Speech Recognition(자동 음성 인식)
 @app.post("/asr")
