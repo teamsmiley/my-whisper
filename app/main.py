@@ -14,12 +14,22 @@ app = FastAPI()
 SAMPLE_RATE=16000
 
 model_name= os.getenv("ASR_MODEL", "base")
+deviceType=""
+deviceName = ""
 
 if torch.cuda.is_available():
+    deviceType = "GPU"
+    deviceName = torch.cuda.get_device_name(0)
+    print("Using GPU:", deviceName)
     model = whisper.load_model(model_name).cuda()
 else:
+    deviceType = "CPU"
+    print("Using CPU")
     model = whisper.load_model(model_name)
-model_lock = Lock()
+
+print("Device Type:", deviceType)
+if(deviceType == "GPU"):
+    print("Device Name:", deviceName)
 
 # asr : Automatic Speech Recognition(자동 음성 인식)
 @app.post("/asr")
@@ -37,16 +47,6 @@ async def index():
 
 @app.get("/health")
 def health():
-    print("model:",model_name)
-    deviceType=""
-    deviceName = ""
-    if torch.cuda.is_available():
-        deviceType = "GPU"
-        deviceName = torch.cuda.get_device_name(0)
-        print("Using GPU:", deviceName)
-    else:
-        deviceType = "CPU"
-        print("Using CPU")
     return {"model": model_name,"deviceType": deviceType, "deviceName": deviceName}
 
 def load_audio(file: BinaryIO, sr: int = SAMPLE_RATE):
