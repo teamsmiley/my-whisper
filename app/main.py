@@ -40,7 +40,7 @@ def transcribe(
     audio = load_audio(audio_file.file)
     with model_lock:   
         result = model.transcribe(audio)
-    return result
+    return result["text"]
 
 @app.get("/", response_class=RedirectResponse, include_in_schema=False)
 async def index():
