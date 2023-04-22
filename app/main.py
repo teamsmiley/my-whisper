@@ -21,7 +21,7 @@ def read_root():
     # model = whisper.load_model("large-v2")
     start = time.time()
 
-    file = "audio/kr.mp3"
+    file = "app/audio/kr.mp3"
     result = model.transcribe(file)
     # print(result["text"])
 
