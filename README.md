@@ -22,8 +22,4 @@ from 2:50 sec mp3 file
 | medium   | 1.4G       | 13 sec     |
 | large-v2 | 2.9G       | 17 sec     |
 
-## create code
-
-```sh
-pip freeze > requirements.txt
-```
+1080ti에서 테스트 햇습니다.
