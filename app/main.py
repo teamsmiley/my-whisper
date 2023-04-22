@@ -31,6 +31,13 @@ print("Device Type:", deviceType)
 if(deviceType == "GPU"):
     print("Device Name:", deviceName)
 
+@app.get("/", response_class=RedirectResponse, include_in_schema=False)
+async def index():
+    return "/docs"
+
+@app.get("/health")
+def health():
+    return {"model": model_name,"deviceType": deviceType, "deviceName": deviceName}
 
 # asr : Automatic Speech Recognition(자동 음성 인식)
 @app.post("/asr")
@@ -41,14 +48,6 @@ def transcribe(
     with model_lock:   
         result = model.transcribe(audio)
     return result["text"]
-
-@app.get("/", response_class=RedirectResponse, include_in_schema=False)
-async def index():
-    return "/docs"
-
-@app.get("/health")
-def health():
-    return {"model": model_name,"deviceType": deviceType, "deviceName": deviceName}
 
 def load_audio(file: BinaryIO, sr: int = SAMPLE_RATE):
     """
