@@ -38,14 +38,16 @@ async def index():
 @app.get("/help")
 def help():
     print("model:",model_name)
+    deviceType=""
     deviceName = ""
     if torch.cuda.is_available():
+        deviceType = "GPU"
         deviceName = torch.cuda.get_device_name(0)
         print("Using GPU:", deviceName)
     else:
-        deviceName = "CPU"
+        deviceType = "CPU"
         print("Using CPU")
-    return {"model": model_name,"GPU": deviceName}
+    return {"model": model_name,"deviceType": deviceType, "deviceName": deviceName}
 
 def load_audio(file: BinaryIO, sr: int = SAMPLE_RATE):
     """
