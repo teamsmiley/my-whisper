@@ -7,6 +7,12 @@ services:
       - ./app:/code/app
     ports:
       - "80:80"
+    environment:
+      # - ASR_MODEL=tiny
+      # - ASR_MODEL=base
+      # - ASR_MODEL=small
+      # - ASR_MODEL=medium
+      - ASR_MODEL=large
     deploy:
       resources:
         reservations:
