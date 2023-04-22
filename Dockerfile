@@ -10,8 +10,8 @@ RUN pip install openai-whisper==20230314
 RUN pip install setuptools-rust==1.5.2
 
 RUN pip install fastapi[all]==0.95.1
-# RUN pip install uvicorn[standard]==0.21.1
-# RUN pip install gunicorn==20.1.0
+RUN pip install uvicorn[standard]==0.21.1
+RUN pip install gunicorn==20.1.0
 
 
 # COPY ./requirements.txt /code/requirements.txt
