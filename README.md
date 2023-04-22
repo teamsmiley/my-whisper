@@ -23,3 +23,7 @@ from 2:50 sec mp3 file
 | large-v2 | 2.9G       | 17 sec     |
 
 1080ti에서 테스트 햇습니다.
+
+## docs
+
+<https://teamsmiley.gitbook.io/devops/ai/whisper>
