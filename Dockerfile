@@ -12,6 +12,7 @@ RUN pip install setuptools-rust
 RUN pip install fastapi[all]==0.95.1
 RUN pip install uvicorn[standard]==0.21.1
 RUN pip install gunicorn==20.1.0
+RUN pip install git+https://github.com/ahmetoner/fastapi-offline-swagger-ui
 
 # COPY ./requirements.txt /code/requirements.txt
 # RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
