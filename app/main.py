@@ -2,9 +2,11 @@ from fastapi import FastAPI
 import whisper
 import torch
 import time
-
+import os
 
 app = FastAPI()
+
+model_name= os.getenv("ASR_MODEL", "base")
 
 @app.get("/")
 def read_root():
@@ -14,11 +16,12 @@ def read_root():
     else:
         device = torch.device("cpu")
         print("Using CPU")
-    model = whisper.load_model("tiny") 
-    # model = whisper.load_model("base")
-    # model = whisper.load_model("small")
-    # model = whisper.load_model("medium")
-    # model = whisper.load_model("large-v2")
+    if torch.cuda.is_available():
+        model = whisper.load_model(model_name).cuda()
+    else:
+        model = whisper.load_model(model_name)
+    model_lock = Lock()
+
     start = time.time()
 
     file = "app/audio/kr.mp3"
