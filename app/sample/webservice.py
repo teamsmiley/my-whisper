@@ -21,37 +21,8 @@ import importlib.metadata
 SAMPLE_RATE=16000
 LANGUAGE_CODES=sorted(list(tokenizer.LANGUAGES.keys()))
 
-projectMetadata = importlib.metadata.metadata('whisper-asr-webservice')
-app = FastAPI(
-    title=projectMetadata['Name'].title().replace('-', ' '),
-    description=projectMetadata['Summary'],
-    version=projectMetadata['Version'],
-    swagger_ui_parameters={"defaultModelsExpandDepth": -1},
-)
 
-assets_path = fastapi_offline_swagger_ui.__path__[0]
-if path.exists(assets_path + "/swagger-ui.css") and path.exists(assets_path + "/swagger-ui-bundle.js"):
-    app.mount("/assets", StaticFiles(directory=assets_path), name="static")
-    def swagger_monkey_patch(*args, **kwargs):
-        return get_swagger_ui_html(
-            *args,
-            **kwargs,
-            swagger_favicon_url="",
-            swagger_css_url="/assets/swagger-ui.css",
-            swagger_js_url="/assets/swagger-ui-bundle.js",
-        )
-    applications.get_swagger_ui_html = swagger_monkey_patch
 
-model_name= os.getenv("ASR_MODEL", "base")
-if torch.cuda.is_available():
-    model = whisper.load_model(model_name).cuda()
-else:
-    model = whisper.load_model(model_name)
-model_lock = Lock()
-
-@app.get("/", response_class=RedirectResponse, include_in_schema=False)
-async def index():
-    return "/docs"
 
 @app.post("/asr", tags=["Endpoints"])
 def transcribe(

@@ -1,5 +1,6 @@
 from fastapi import FastAPI, File, UploadFile
 import whisper
+from whisper import tokenizer
 import torch
 import ffmpeg
 import numpy as np
@@ -75,3 +76,26 @@ def load_audio(file: BinaryIO, sr: int = SAMPLE_RATE):
         raise RuntimeError(f"Failed to load audio: {e.stderr.decode()}") from e
 
     return np.frombuffer(out, np.int16).flatten().astype(np.float32) / 32768.0
+
+
+
+@app.post("/lang")
+def language_detection(
+                audio_file: UploadFile = File(...),
+                ):
+
+    # load audio and pad/trim it to fit 30 seconds
+    audio = load_audio(audio_file.file)
+    audio = whisper.pad_or_trim(audio)
+
+    # make log-Mel spectrogram and move to the same device as the model
+    mel = whisper.log_mel_spectrogram(audio).to(model.device)
+
+    # detect the spoken language
+    with model_lock:
+        _, probs = model.detect_language(mel)
+    detected_lang_code = max(probs, key=probs.get)
+    
+    result = { "detected_language": tokenizer.LANGUAGES[detected_lang_code],"language_code" : detected_lang_code }
+
+    return result
