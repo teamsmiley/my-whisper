@@ -13,7 +13,7 @@ services:
       # - ASR_MODEL=small
       # - ASR_MODEL=medium
       # - ASR_MODEL=large
-    # deploy:
+    # deploy: # gpu사용시 주석해제
     #   resources:
     #     reservations:
     #       devices:
