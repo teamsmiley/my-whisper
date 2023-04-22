@@ -11,12 +11,6 @@ model_name= os.getenv("ASR_MODEL", "base")
 
 @app.get("/")
 def read_root():
-    # if torch.cuda.is_available():
-    #     device = torch.device("cuda")
-    #     print("Using GPU:", torch.cuda.get_device_name(0))
-    # else:
-    #     device = torch.device("cpu")
-    #     print("Using CPU")
     print("model:",model_name)
     if torch.cuda.is_available():
         model = whisper.load_model(model_name).cuda()
@@ -30,10 +24,9 @@ def read_root():
 
     file = "app/audio/kr.mp3"
     result = model.transcribe(file)
-    # print(result["text"])
 
     end = time.time()
     print("The time of execution of above program is :", (end-start) * 1000, "ms")
 
-    return {"content": result["text"]}
+    return {"content": result["text"],"during time(ms)": (end-start) * 1000}
 
