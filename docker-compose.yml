@@ -4,6 +4,7 @@ services:
     build: .
     volumes:
       - ./cache:/root/.cache/whisper:rw
+      - ./app:/code/app
     ports:
       - "80:80"
     deploy:
