@@ -4,7 +4,7 @@ WORKDIR /code
 
 RUN apt update 
 RUN apt install ffmpeg -y
-# RUN pip install --upgrade pip
+RUN pip install --upgrade pip
 RUN pip install -U openai-whisper
 # RUN pip install git+https://github.com/openai/whisper.git 
 RUN pip install setuptools-rust
