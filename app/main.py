@@ -3,6 +3,7 @@ import whisper
 import torch
 import time
 import os
+from threading import Lock
 
 app = FastAPI()
 
