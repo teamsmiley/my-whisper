@@ -1,32 +1,74 @@
-from fastapi import FastAPI, Path
+from fastapi import FastAPI, File, UploadFile
 import whisper
 import torch
-import time
+import ffmpeg
+import numpy as np
 import os
 from threading import Lock
+from typing import BinaryIO
+from fastapi.responses import StreamingResponse, RedirectResponse
 
 app = FastAPI()
 
+SAMPLE_RATE=16000
+
 model_name= os.getenv("ASR_MODEL", "base")
 
-@app.get("/")
-def read_root():
+if torch.cuda.is_available():
+    model = whisper.load_model(model_name).cuda()
+else:
+    model = whisper.load_model(model_name)
+model_lock = Lock()
+
+# asr : Automatic Speech Recognition(자동 음성 인식)
+@app.post("/asr")
+def transcribe(
+                audio_file: UploadFile = File(...),
+                ):
+    audio = load_audio(audio_file.file)
+    with model_lock:   
+        result = model.transcribe(audio)
+    return result
+
+@app.get("/", response_class=RedirectResponse, include_in_schema=False)
+async def index():
+    return "/docs"
+
+@app.get("/help")
+def help():
     print("model:",model_name)
+    deviceName = ""
     if torch.cuda.is_available():
-        model = whisper.load_model(model_name).cuda()
-        print("Using GPU:", torch.cuda.get_device_name(0))
+        deviceName = torch.cuda.get_device_name(0)
+        print("Using GPU:", deviceName)
     else:
-        model = whisper.load_model(model_name)
+        deviceName = "CPU"
         print("Using CPU")
-    model_lock = Lock()
+    return {"model": model_name,"device": model,"GPU": deviceName}
 
-    start = time.time()
+def load_audio(file: BinaryIO, sr: int = SAMPLE_RATE):
+    """
+    Open an audio file object and read as mono waveform, resampling as necessary.
+    Modified from https://github.com/openai/whisper/blob/main/whisper/audio.py to accept a file object
+    Parameters
+    ----------
+    file: BinaryIO
+        The audio file like object
+    sr: int
+        The sample rate to resample the audio if necessary
+    Returns
+    -------
+    A NumPy array containing the audio waveform, in float32 dtype.
+    """
+    try:
+        # This launches a subprocess to decode audio while down-mixing and resampling as necessary.
+        # Requires the ffmpeg CLI and `ffmpeg-python` package to be installed.
+        out, _ = (
+            ffmpeg.input("pipe:", threads=0)
+            .output("-", format="s16le", acodec="pcm_s16le", ac=1, ar=sr)
+            .run(cmd="ffmpeg", capture_stdout=True, capture_stderr=True, input=file.read())
+        )
+    except ffmpeg.Error as e:
+        raise RuntimeError(f"Failed to load audio: {e.stderr.decode()}") from e
 
-    file = "app/audio/kr.mp3"
-    result = model.transcribe(file)
-
-    end = time.time()
-    print("The time of execution of above program is :", (end-start))
-
-    return {"content": result["text"],"processing_seconds": (end-start)}
-
+    return np.frombuffer(out, np.int16).flatten().astype(np.float32) / 32768.0
