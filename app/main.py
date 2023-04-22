@@ -26,7 +26,7 @@ def read_root():
     result = model.transcribe(file)
 
     end = time.time()
-    print("The time of execution of above program is :", (end-start) * 1000, "ms")
+    print("The time of execution of above program is :", (end-start))
 
-    return {"content": result["text"],"during time(ms)": (end-start) * 1000}
+    return {"content": result["text"],"processing_seconds": (end-start)}
 
