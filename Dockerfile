@@ -5,9 +5,9 @@ WORKDIR /code
 RUN apt update 
 RUN apt install ffmpeg -y
 RUN pip install --upgrade pip
+
 RUN pip install openai-whisper==20230314
-# RUN pip install git+https://github.com/openai/whisper.git 
-RUN pip install setuptools-rust
+RUN pip install setuptools-rust==1.5.2
 
 RUN pip install fastapi[all]==0.95.1
 # RUN pip install uvicorn[standard]==0.21.1
