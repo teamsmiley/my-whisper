@@ -14,5 +14,19 @@ def read_root():
     else:
         device = torch.device("cpu")
         print("Using CPU")
-    return {"Hello": "World"}
+    model = whisper.load_model("tiny") 
+    # model = whisper.load_model("base")
+    # model = whisper.load_model("small")
+    # model = whisper.load_model("medium")
+    # model = whisper.load_model("large-v2")
+    start = time.time()
+
+    file = "audio/kr.mp3"
+    result = model.transcribe(file)
+    print(result["text"])
+
+    end = time.time()
+    print("The time of execution of above program is :", (end-start) * 1000, "ms")
+
+    return {"content": result["text"]}
 
