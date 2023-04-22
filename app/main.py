@@ -8,6 +8,7 @@ from threading import Lock
 from typing import BinaryIO
 from fastapi.responses import StreamingResponse, RedirectResponse
 
+print 
 app = FastAPI()
 
 SAMPLE_RATE=16000
@@ -44,7 +45,7 @@ def help():
     else:
         deviceName = "CPU"
         print("Using CPU")
-    return {"model": model_name,"device": model,"GPU": deviceName}
+    return {"model": model_name,"GPU": deviceName}
 
 def load_audio(file: BinaryIO, sr: int = SAMPLE_RATE):
     """
