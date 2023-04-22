@@ -35,8 +35,8 @@ def transcribe(
 async def index():
     return "/docs"
 
-@app.get("/help")
-def help():
+@app.get("/health")
+def health():
     print("model:",model_name)
     deviceType=""
     deviceName = ""
