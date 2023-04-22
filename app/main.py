@@ -26,6 +26,7 @@ else:
     deviceType = "CPU"
     print("Using CPU")
     model = whisper.load_model(model_name)
+model_lock = Lock()
 
 print("Device Type:", deviceType)
 if(deviceType == "GPU"):
