@@ -23,7 +23,7 @@ def read_root():
 
     file = "audio/kr.mp3"
     result = model.transcribe(file)
-    print(result["text"])
+    # print(result["text"])
 
     end = time.time()
     print("The time of execution of above program is :", (end-start) * 1000, "ms")
