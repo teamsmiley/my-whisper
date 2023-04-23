@@ -53,11 +53,6 @@ def transcribe(
     options_dict = {"language" : language  }
     with model_lock:   
         result = model.transcribe(audio, **options_dict)
-    
-    filename = audio_file.filename.split('.')[0]
-    myFile = StringIO()
-    WriteTXT(ResultWriter).write_result(result, file = myFile)
-    myFile.seek(0)
     return result["text"]
 
 
