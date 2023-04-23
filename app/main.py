@@ -12,6 +12,7 @@ from fastapi.responses import StreamingResponse, RedirectResponse
 app = FastAPI()
 
 SAMPLE_RATE=16000
+LANGUAGE_CODES=sorted(list(tokenizer.LANGUAGES.keys()))
 
 model_name= os.getenv("ASR_MODEL", "base")
 deviceType=""
@@ -45,9 +46,15 @@ def health():
 def transcribe(
                 audio_file: UploadFile = File(...),
                 task : Union[str, None] = Query(default="transcribe", enum=["transcribe", "translate"]),
+                language: Union[str, None] = Query(default=None, enum=LANGUAGE_CODES),
+                initial_prompt: Union[str, None] = Query(default=None),
                 ):
     audio = load_audio(audio_file.file)
     options_dict = {"task" : task}
+    if language:
+        options_dict["language"] = language    
+    if initial_prompt:
+        options_dict["initial_prompt"] = initial_prompt
     with model_lock:   
         result = model.transcribe(audio, **options_dict)
     return result["text"]
@@ -78,8 +85,6 @@ def load_audio(file: BinaryIO, sr: int = SAMPLE_RATE):
         raise RuntimeError(f"Failed to load audio: {e.stderr.decode()}") from e
 
     return np.frombuffer(out, np.int16).flatten().astype(np.float32) / 32768.0
-
-
 
 @app.post("/lang")
 def language_detection(
