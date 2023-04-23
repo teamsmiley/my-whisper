@@ -6,7 +6,7 @@ import ffmpeg
 import numpy as np
 import os
 from threading import Lock
-from typing import BinaryIO
+from typing import BinaryIO, Union
 from fastapi.responses import StreamingResponse, RedirectResponse
 
 app = FastAPI()
@@ -44,10 +44,12 @@ def health():
 @app.post("/asr")
 def transcribe(
                 audio_file: UploadFile = File(...),
+                task : Union[str, None] = Query(default="transcribe", enum=["transcribe", "translate"]),
                 ):
     audio = load_audio(audio_file.file)
+    options_dict = {"task" : task}
     with model_lock:   
-        result = model.transcribe(audio)
+        result = model.transcribe(audio, **options_dict)
     return result["text"]
 
 def load_audio(file: BinaryIO, sr: int = SAMPLE_RATE):
