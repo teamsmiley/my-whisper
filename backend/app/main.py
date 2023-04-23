@@ -1,4 +1,4 @@
-from fastapi import FastAPI, File, UploadFile, Query 
+from fastapi import FastAPI, File, UploadFile, Query , WebSocket
 import whisper
 from whisper.utils import ResultWriter, WriteTXT, WriteSRT, WriteVTT, WriteTSV, WriteJSON
 from whisper import tokenizer
