@@ -1,5 +1,6 @@
 from fastapi import FastAPI, File, UploadFile, Query
 import whisper
+from whisper.utils import ResultWriter, WriteTXT, WriteSRT, WriteVTT, WriteTSV, WriteJSON
 from whisper import tokenizer
 import torch
 import ffmpeg
@@ -8,6 +9,7 @@ import os
 from threading import Lock
 from typing import BinaryIO, Union
 from fastapi.responses import StreamingResponse, RedirectResponse
+from io import StringIO
 
 app = FastAPI()
 
@@ -57,7 +59,14 @@ def transcribe(
         options_dict["initial_prompt"] = initial_prompt
     with model_lock:   
         result = model.transcribe(audio, **options_dict)
-    return result["text"]
+    
+    filename = audio_file.filename.split('.')[0]
+    myFile = StringIO()
+    WriteTXT(ResultWriter).write_result(result, file = myFile)
+    myFile.seek(0)
+    # return result["text"]
+    return StreamingResponse(myFile, media_type="text/plain", 
+                            headers={'Content-Disposition': f'attachment; filename="{filename}.txt"'})
 
 def load_audio(file: BinaryIO, sr: int = SAMPLE_RATE):
     """
