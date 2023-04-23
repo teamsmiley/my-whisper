@@ -58,9 +58,8 @@ def transcribe(
     myFile = StringIO()
     WriteTXT(ResultWriter).write_result(result, file = myFile)
     myFile.seek(0)
-    # return result["text"]
-    return StreamingResponse(myFile, media_type="text/plain", 
-                            headers={'Content-Disposition': f'attachment; filename="{filename}.txt"'})
+    return result["text"]
+
 
 def load_audio(file: BinaryIO, sr: int = SAMPLE_RATE):
     """
