@@ -47,16 +47,10 @@ def health():
 @app.post("/asr")
 def transcribe(
                 audio_file: UploadFile = File(...),
-                task : Union[str, None] = Query(default="transcribe", enum=["transcribe", "translate"]),
                 language: Union[str, None] = Query(default=None, enum=LANGUAGE_CODES),
-                initial_prompt: Union[str, None] = Query(default=None),
                 ):
     audio = load_audio(audio_file.file)
-    options_dict = {"task" : task}
-    if language:
-        options_dict["language"] = language    
-    if initial_prompt:
-        options_dict["initial_prompt"] = initial_prompt
+    options_dict = {"language" : language  }
     with model_lock:   
         result = model.transcribe(audio, **options_dict)
     
