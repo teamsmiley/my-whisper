@@ -49,11 +49,14 @@ def transcribe(
                 audio_file: UploadFile = File(...),
                 language: Union[str, None] = Query(default=None, enum=LANGUAGE_CODES),
                 task : Union[str, None] = Query(default="transcribe", enum=["transcribe", "translate"]),
+                initial_prompt: Union[str, None] = Query(default=None),
                 ):
     audio = load_audio(audio_file.file)
     options_dict = {"language" : language  }
     if task:
-        options_dict["task"] = task    
+        options_dict["task"] = task
+    if initial_prompt:
+        options_dict["initial_prompt"] = initial_prompt   
     with model_lock:   
         result = model.transcribe(audio, **options_dict)
     return result["text"]
