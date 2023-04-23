@@ -8,7 +8,7 @@ git pull && docker-compose up --build
 
 ## reference
 
-- https://cloud.google.com/compute/docs/gpus?hl=ko
+- <https://cloud.google.com/compute/docs/gpus?hl=ko>
 
 ## performance
 
