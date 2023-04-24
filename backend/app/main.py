@@ -1,4 +1,4 @@
-from fastapi import FastAPI, File, UploadFile, Query , WebSocket
+from fastapi import FastAPI, File, UploadFile, Query , WebSocket, WebSocketDisconnect
 import whisper
 from whisper.utils import ResultWriter, WriteTXT, WriteSRT, WriteVTT, WriteTSV, WriteJSON
 from whisper import tokenizer
@@ -10,6 +10,12 @@ from threading import Lock
 from typing import BinaryIO, Union
 from fastapi.responses import StreamingResponse, RedirectResponse
 from io import StringIO
+from datetime import datetime
+import logging
+import asyncio
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("FastAPI app")
 
 app = FastAPI()
 
