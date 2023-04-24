@@ -115,4 +115,4 @@ async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     while True:
         data = await websocket.receive_text()
-        await websocket.send_text("{'source':'test','content':'bbb'}")
+        await websocket.send_text("{source:'test',content:'bbb'}")

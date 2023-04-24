@@ -25,7 +25,7 @@ export class AppComponent {
       content: '',
     };
     message.source = 'localhost';
-    message.content = this.content;
+    message.content = 'test';
 
     this.sent.push(message);
     this.WebsocketService.messages.next(message);
