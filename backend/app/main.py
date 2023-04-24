@@ -125,7 +125,7 @@ async def websocket_endpoint(websocket: WebSocket):
             # Receive the JSON data sent by a client.
             data = await websocket.receive_json()
             # Some (fake) heavey data processing logic.
-            logger.info("received data",data)
+            logger.info("received data: "+data)
             message_processed = await heavy_data_processing(data)
             # Send JSON data to the client.
             await websocket.send_json(
