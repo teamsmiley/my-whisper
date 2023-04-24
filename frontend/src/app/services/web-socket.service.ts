@@ -3,6 +3,8 @@ import { Observable, Observer } from 'rxjs';
 import { AnonymousSubject } from 'rxjs/internal/Subject';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
+import { environment } from '../../environments/environment';
 
 const WS_URL = 'ws://whisper/ws';
 
