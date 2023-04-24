@@ -13,10 +13,10 @@ services:
       # - ASR_MODEL=small
       # - ASR_MODEL=medium
       # - ASR_MODEL=large
-    # deploy: # gpu사용시 주석해제
-    #   resources:
-    #     reservations:
-    #       devices:
-    #         - driver: 'nvidia'
-    #           capabilities: [gpu]
-    #           count: 1
+    deploy: # gpu사용시 주석해제
+      resources:
+        reservations:
+          devices:
+            - driver: 'nvidia'
+              capabilities: [gpu]
+              count: 1
