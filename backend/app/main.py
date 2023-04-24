@@ -114,7 +114,5 @@ def language_detection(
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     while True:
-        print("===")
         data = await websocket.receive_text()
-        print("Receive Message:", data)
         await websocket.send_text("{'source':'test','content':'bbb'}")
