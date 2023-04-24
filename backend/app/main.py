@@ -113,6 +113,7 @@ def language_detection(
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
+
     while True:
         try:
             # Receive the JSON data sent by a client.
@@ -129,3 +130,9 @@ async def websocket_endpoint(websocket: WebSocket):
         except WebSocketDisconnect:
             logger.info("The connection is closed.")
             break
+
+async def heavy_data_processing(data: dict):
+    """Some (fake) heavy data processing logic."""
+    await asyncio.sleep(2)
+    message_processed = data.get("message", "").upper()
+    return message_processed
