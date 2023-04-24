@@ -114,5 +114,18 @@ def language_detection(
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     while True:
-        data = await websocket.receive_text()
-        await websocket.send_text("{source:'test',content:'bbb'}")
+        try:
+            # Receive the JSON data sent by a client.
+            data = await websocket.receive_json()
+            # Some (fake) heavey data processing logic.
+            message_processed = await heavy_data_processing(data)
+            # Send JSON data to the client.
+            await websocket.send_json(
+                {
+                    "message": message_processed,
+                    "time": datetime.now().strftime("%H:%M:%S"),
+                }
+            )
+        except WebSocketDisconnect:
+            logger.info("The connection is closed.")
+            break

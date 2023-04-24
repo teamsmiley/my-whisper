@@ -8,54 +8,35 @@ import { environment } from '../../environments/environment';
 
 const WS_URL = 'ws://whisper/ws';
 
-export interface Message {
-  source: string;
-  content: string;
+interface MessageData {
+  message: string;
+  time?: string;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class WebSocketService {
-  private subject: AnonymousSubject<MessageEvent>;
-  public messages: Subject<Message>;
+  private socket$!: WebSocketSubject<any>;
+  public receivedData: MessageData[] = [];
 
-  constructor() {
-    this.messages = <Subject<Message>>this.connect(WS_URL).pipe(
-      map((response: MessageEvent): Message => {
-        console.log(response.data);
-        let data = JSON.parse(response.data);
-        return data;
-      })
-    );
-  }
+  constructor() {}
 
-  public connect(url): AnonymousSubject<MessageEvent> {
-    if (!this.subject) {
-      this.subject = this.create(url);
-      console.log('Successfully connected: ' + url);
+  public connect(): void {
+    if (!this.socket$ || this.socket$.closed) {
+      this.socket$ = webSocket(environment.ws_url);
+
+      this.socket$.subscribe((data: MessageData) => {
+        this.receivedData.push(data);
+      });
     }
-    return this.subject;
   }
 
-  private create(url): AnonymousSubject<MessageEvent> {
-    let ws = new WebSocket(url);
-    let observable = new Observable((obs: Observer<MessageEvent | any>) => {
-      ws.onmessage = obs.next.bind(obs);
-      ws.onerror = obs.error.bind(obs);
-      ws.onclose = obs.complete.bind(obs);
-      return ws.close.bind(ws);
-    });
-    let observer = {
-      error: null,
-      complete: null,
-      next: (data: Object) => {
-        console.log('Message sent to websocket: ', data);
-        if (ws.readyState === WebSocket.OPEN) {
-          ws.send(JSON.stringify(data));
-        }
-      },
-    };
-    return new AnonymousSubject<MessageEvent>(observer, observable);
+  sendMessage(message: string) {
+    this.socket$.next({ message });
+  }
+
+  close() {
+    this.socket$.complete();
   }
 }
