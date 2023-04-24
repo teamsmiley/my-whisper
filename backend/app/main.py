@@ -117,4 +117,4 @@ async def websocket_endpoint(websocket: WebSocket):
         print("===")
         data = await websocket.receive_text()
         print("Receive Message:", data)
-        await websocket.send_text("{aaa:bbb}")
+        await websocket.send_text("{'aaa':'bbb'}")
