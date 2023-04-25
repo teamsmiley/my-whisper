@@ -3,7 +3,7 @@ on:
   push:
     branches: [dev]
 
-### frontend
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -19,7 +19,7 @@ jobs:
           password: 2mkjNUYvkacYBD
           # username: ${{ secrets.GITLAB_USERNAME }}
           # password: ${{ secrets.GITLAB_PASSWORD }}
-
+### frontend
       - name: staging build, tag, and push image to gitlab ECR
         env:
           ECR_REGISTRY: gitlab.xgridcolo.com:5050/ecr
@@ -71,23 +71,6 @@ jobs:
 
 ### backend
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Login to Gitlab
-        uses: docker/login-action@v1
-        with:
-          registry: gitlab.xgridcolo.com:5050
-          username: ragon
-          password: 2mkjNUYvkacYBD
-          # username: ${{ secrets.GITLAB_USERNAME }}
-          # password: ${{ secrets.GITLAB_PASSWORD }}
-
       - name: staging build, tag, and push image to gitlab ECR
         env:
           ECR_REGISTRY: gitlab.xgridcolo.com:5050/ecr
@@ -136,3 +119,5 @@ jobs:
           git config --local user.name "GitHub Action"
           git commit -am "push new tag"
           git push
+
+
