@@ -14,10 +14,22 @@ from datetime import datetime
 import logging
 import asyncio
 
+from fastapi.middleware.cors import CORSMiddleware
+
+origins = ["*"]
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("FastAPI app")
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 SAMPLE_RATE=16000
 LANGUAGE_CODES=sorted(list(tokenizer.LANGUAGES.keys()))
@@ -143,3 +155,4 @@ async def heavy_data_processing(data: dict):
     # await asyncio.sleep(2)
     message_processed = data.get("message", "").upper()
     return message_processed
+
