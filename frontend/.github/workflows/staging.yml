@@ -1,0 +1,69 @@
+name: staging
+on:
+  push:
+    branches: [dev]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Login to Gitlab
+        uses: docker/login-action@v1
+        with:
+          registry: gitlab.xgridcolo.com:5050
+          username: ragon
+          password: 2mkjNUYvkacYBD
+          # username: ${{ secrets.GITLAB_USERNAME }}
+          # password: ${{ secrets.GITLAB_PASSWORD }}
+
+      - name: staging build, tag, and push image to gitlab ECR
+        env:
+          ECR_REGISTRY: gitlab.xgridcolo.com:5050/ecr
+          ECR_REPOSITORY: whisper-front-staging
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile-staging .
+          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+
+      ### C3
+      - name: Checkout argocd
+        uses: actions/checkout@v2
+        with:
+          repository: teamsmiley/argocd-c3
+          token: ${{ secrets.PAT }}
+
+      - name: replace staging image version number to sha
+        run: |
+          cd apps/whisper-staging
+          sed "s/:latest/:${{ github.sha }}/g" 32.www.origin > 32.www.yml
+
+      - name: Commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -am "push new tag"
+          git push
+
+      ### C4
+      - name: Checkout argocd
+        uses: actions/checkout@v2
+        with:
+          repository: teamsmiley/argocd-c4
+          token: ${{ secrets.PAT }}
+
+      - name: replace staging image version number to sha
+        run: |
+          cd apps/whisper-staging
+          sed "s/:latest/:${{ github.sha }}/g" 32.www.origin > 32.www.yml
+
+      - name: Commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -am "push new tag"
+          git push

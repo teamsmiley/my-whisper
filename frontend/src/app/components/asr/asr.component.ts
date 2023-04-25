@@ -9,8 +9,7 @@ import { environment } from 'src/environments/environment';
 export class AsrComponent implements OnInit {
   fileUploadUrl: string;
 
-  acceptedFiles: string =
-    '.pdf, .jpg, .jpeg, .png, .gif, .doc, .docx, .xls, .xlsx, .csv, .tsv, .xml, .txt, .html';
+  acceptedFiles: string = '.mp3, .m4a, .mp4, .wav, .ts, .mka, .mov,';
 
   uploadedFiles: any[] = [];
 
