@@ -1,0 +1,32 @@
+body {
+  background: #f9f9fb;
+  margin: 0px;
+  padding: 0px;
+}
+.layout-content {
+  padding: 30px 15px 0px;
+}
+
+.nav-bar {
+  background: #f3f3f7;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  .logo {
+    display: flex;
+    font-size: 24px;
+    font-weight: bold;
+    flex-flow: row;
+    align-items: center;
+    width: 150px;
+    padding: 0px 15px;
+  }
+  .menu {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    padding: 0px 15px;
+  }
+}

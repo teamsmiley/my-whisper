@@ -9,9 +9,10 @@ import { SharedModule } from 'src/shared/shared.module';
 import { AsrComponent } from './components/asr/asr.component';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './components/home/home.component';
+import { NavComponent } from './components/nav/nav.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, AsrComponent],
+  declarations: [AppComponent, NavComponent, HomeComponent, AsrComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
