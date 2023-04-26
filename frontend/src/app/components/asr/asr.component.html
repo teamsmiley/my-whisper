@@ -25,7 +25,14 @@
     </ng-template>
   </p-fileUpload>
 </div>
-<p-card *ngIf="file.value">
-  <p><b>Language : </b>{{ file.value.language }}</p>
-  <p><b>Text : </b>{{ file.value.text }}</p>
+<p-card>
+  <ng-container *ngIf="!file.value">
+    <p-message
+      severity="info"
+      text="Execution results are displayed here."
+    ></p-message>
+  </ng-container>
+
+  <p><b>Language : </b>{{ file.value.language || "..." }}</p>
+  <p><b>Text : </b>{{ file.value.text || "..." }}</p>
 </p-card>
