@@ -14,14 +14,12 @@
     chooseIcon="pi pi-plus"
   >
     <ng-template pTemplate="content">
-      <!-- <div *ngIf="!uploadedFiles.length">
-        <p>Drag file to this area to upload.</p>
-      </div> -->
       <ul *ngIf="uploadedFiles?.length">
         <li *ngFor="let file of uploadedFiles">
           {{ file.name }} - {{ file.size }} bytes
         </li>
       </ul>
+      <p class="drag-text">Drag file to this area to upload.</p>
     </ng-template>
   </p-fileUpload>
 </div>
