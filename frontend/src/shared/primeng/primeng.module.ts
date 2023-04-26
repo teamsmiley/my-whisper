@@ -7,6 +7,7 @@ import { ToastModule } from 'primeng/toast';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { SplitButtonModule } from 'primeng/splitbutton';
 
 @NgModule({
   exports: [
@@ -17,6 +18,7 @@ import { CardModule } from 'primeng/card';
     InputTextModule,
     ButtonModule,
     CardModule,
+    SplitButtonModule,
   ],
   providers: [MessageService],
 })

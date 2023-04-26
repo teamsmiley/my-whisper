@@ -1,5 +1,6 @@
 <div class="nav-bar">
   <div class="logo">whisper</div>
+
   <div class="menu">
     <p-button
       label="Home"
@@ -11,5 +12,22 @@
       styleClass="p-button-sm p-button-rounded"
       routerLink="upload"
     ></p-button>
+    <p-button
+      label="LOGIN"
+      styleClass="p-button-sm p-button-rounded p-button-success m-l-5"
+      (click)="auth.loginWithRedirect()"
+      *ngIf="(auth.isAuthenticated$ | async) === false"
+    ></p-button>
+    <ng-container *ngIf="auth.user$ | async as user">
+      <p-splitButton
+        icon="pi pi-user"
+        label="{{ user.name }}"
+        [model]="this.items"
+        styleClass="p-button-sm p-button-rounded p-button-success m-l-5"
+        *ngIf="auth.isAuthenticated$ | async"
+      >
+        ></p-splitButton
+      >
+    </ng-container>
   </div>
 </div>

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AsrComponent } from './components/asr/asr.component';
 import { HomeComponent } from './components/home/home.component';
+import { AuthGuard } from '@auth0/auth0-angular';
 
 const routes: Routes = [
   {
@@ -16,6 +17,7 @@ const routes: Routes = [
   {
     path: 'upload',
     component: AsrComponent,
+    canActivate: [AuthGuard],
   },
 ];
 
