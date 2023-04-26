@@ -19,7 +19,13 @@
           {{ file.name }} - {{ file.size }} bytes
         </li>
       </ul>
-      <p class="drag-text">Drag file to this area to upload.</p>
+      <p *ngIf="!file.value" class="drag-text">
+        Drag file to this area to upload.
+      </p>
     </ng-template>
   </p-fileUpload>
 </div>
+<p-card *ngIf="file.value">
+  <p><b>Language : </b>{{ file.value.language }}</p>
+  <p><b>Text : </b>{{ file.value.text }}</p>
+</p-card>

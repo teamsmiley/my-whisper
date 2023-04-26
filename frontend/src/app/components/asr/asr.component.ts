@@ -13,7 +13,13 @@ export class AsrComponent implements OnInit {
 
   uploadedFiles: any[] = [];
 
-  constructor(private messageService: MessageService) {}
+  asrFormGroup: FormGroup;
+
+  constructor(private messageService: MessageService) {
+    this.asrFormGroup = new FormGroup({
+      file: new FormControl(''),
+    });
+  }
 
   ngOnInit() {
     this.fileUploadUrl = `${environment.ws_file_upload_url}`;
@@ -21,6 +27,7 @@ export class AsrComponent implements OnInit {
 
   onUpload(event, type: string): void {
     if (type === 'file') {
+      this.setFile(event.originalEvent.body);
       for (let file of event.files) {
         this.uploadedFiles.push(file);
       }
@@ -37,5 +44,13 @@ export class AsrComponent implements OnInit {
       summary: 'Error',
       detail: 'File Not Uploaded.',
     });
+  }
+
+  get file() {
+    return this.asrFormGroup.get('file');
+  }
+
+  setFile(value: any) {
+    this.file.setValue(value);
   }
 }
