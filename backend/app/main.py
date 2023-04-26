@@ -14,10 +14,21 @@ from datetime import datetime
 import logging
 import asyncio
 
+from fastapi.middleware.cors import CORSMiddleware
+
+origins = ["*"]
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("FastAPI app")
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 SAMPLE_RATE=16000
 LANGUAGE_CODES=sorted(list(tokenizer.LANGUAGES.keys()))
@@ -65,7 +76,7 @@ def transcribe(
         options_dict["initial_prompt"] = initial_prompt   
     with model_lock:   
         result = model.transcribe(audio, **options_dict)
-    return result["text"]
+    return result
 
 
 def load_audio(file: BinaryIO, sr: int = SAMPLE_RATE):
@@ -143,3 +154,4 @@ async def heavy_data_processing(data: dict):
     # await asyncio.sleep(2)
     message_processed = data.get("message", "").upper()
     return message_processed
+
