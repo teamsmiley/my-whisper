@@ -5,7 +5,7 @@ FROM node:16 as builder
 # when we change our application's nodejs dependencies:
 COPY frontend/package.json /tmp/package.json
 RUN cd /tmp && npm install
-RUN mkdir -p /app && cp -a /tmp/node_modules /app
+RUN mkdir -p /app/frontend && cp -a /tmp/node_modules /app/frontend
 
 WORKDIR /app/frontend
 COPY . .
