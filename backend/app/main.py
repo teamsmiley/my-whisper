@@ -76,7 +76,7 @@ def transcribe(
         options_dict["initial_prompt"] = initial_prompt   
     with model_lock:   
         result = model.transcribe(audio, **options_dict)
-    return result["text"]
+    return result
 
 
 def load_audio(file: BinaryIO, sr: int = SAMPLE_RATE):
