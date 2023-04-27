@@ -21,8 +21,8 @@ import { AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
     SharedModule,
     HttpClientModule,
     AuthModule.forRoot({
-      domain: 'ai-cpa.us.auth0.com',
-      clientId: 'xyACyxTaD0NOcrvMJesxR1j3Ct5Dbbhn',
+      domain: 'ai-whisper.us.auth0.com',
+      clientId: 'nPx6xQSIOl4ChE96B6zTdsCADq4Nxnsn',
       authorizationParams: {
         redirect_uri: window.location.origin,
       },
