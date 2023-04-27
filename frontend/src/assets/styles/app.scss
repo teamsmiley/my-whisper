@@ -22,12 +22,22 @@ body {
   justify-content: space-between;
   .logo {
     display: flex;
-    font-size: 24px;
-    font-weight: bold;
     flex-flow: row;
     align-items: center;
     width: 150px;
     padding: 0px 15px;
+    img {
+      width: 32px;
+      height: 32px;
+      margin-right: 10px;
+    }
+    b {
+      font-weight: 800;
+      text-transform: capitalize;
+      font-size: 22px;
+      letter-spacing: -1px;
+      color: #a2349e;
+    }
   }
   .menu {
     display: flex;
