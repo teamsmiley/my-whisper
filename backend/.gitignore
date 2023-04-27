@@ -1,5 +1,6 @@
 **/cache
 app/__pycache__
 bin/
+lib/
 include/
 
