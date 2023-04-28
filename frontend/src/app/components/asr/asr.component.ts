@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { environment } from 'src/environments/environment';
 @Component({
-  selector: 'asr',
+  selector: 'app-asr',
   templateUrl: './asr.component.html',
 })
 export class AsrComponent implements OnInit {

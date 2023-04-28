@@ -1,0 +1,49 @@
+<div class="voice-recorder-wrap">
+  <ng-container *ngIf="!isRecorder && !blobUrl">
+    <div class="recorder-box">
+      <button class="mic-btn" id="button" (click)="startRecorder()">
+        <i class="pi pi-microphone"></i>
+      </button>
+    </div>
+    <div class="recorder-text">Click the mic to start recording.</div>
+  </ng-container>
+  <ng-container *ngIf="isRecorder && !blobUrl">
+    <div class="recorder-box">
+      <button class="mic-btn mic-ani" id="button" (click)="stopRecorder()">
+        <i class="pi pi-circle-fill"></i>
+      </button>
+    </div>
+    <div class="recorder-text">
+      <div class="recorder-time">{{ recordedTime }}</div>
+      Stop recording.
+    </div>
+  </ng-container>
+  <ng-container *ngIf="blobUrl">
+    <audio controls>
+      <source [src]="blobUrl" type="audio/webm" />
+    </audio>
+    <div class="spacer"></div>
+    <div class="recorder-option">
+      <button class="option-btn" id="button" (click)="clearRecordedData()">
+        <i class="pi pi-trash"></i>
+      </button>
+      <button class="option-btn m-l-15" id="button" (click)="onUpload()">
+        <i class="pi pi-upload"></i>
+      </button>
+      <button class="option-btn m-l-15" id="button" (click)="download()">
+        <i class="pi pi-download"></i>
+      </button>
+    </div>
+  </ng-container>
+</div>
+<p-card>
+  <ng-container *ngIf="!file.value">
+    <p-message
+      severity="info"
+      text="Execution results are displayed here."
+    ></p-message>
+  </ng-container>
+
+  <p><b>Language : </b>{{ file.value.language || "..." }}</p>
+  <p><b>Text : </b>{{ file.value.text || "..." }}</p>
+</p-card>

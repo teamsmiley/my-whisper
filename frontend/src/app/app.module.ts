@@ -11,9 +11,17 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './components/home/home.component';
 import { NavComponent } from './components/nav/nav.component';
 import { AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
+import { VoiceRecorderComponent } from './components/voice-recorder/voice-recorder.component';
+import { VoiceRecorderService } from './services/voice-recorder.service';
 
 @NgModule({
-  declarations: [AppComponent, NavComponent, HomeComponent, AsrComponent],
+  declarations: [
+    AppComponent,
+    NavComponent,
+    HomeComponent,
+    AsrComponent,
+    VoiceRecorderComponent,
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -31,6 +39,7 @@ import { AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthHttpInterceptor, multi: true },
     WebSocketService,
+    VoiceRecorderService,
   ],
   bootstrap: [AppComponent],
 })

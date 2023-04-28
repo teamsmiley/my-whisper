@@ -1,3 +1,4 @@
+/* basic */
 body {
   background: #f9f9fb;
   margin: 0px;
@@ -13,6 +14,21 @@ body {
   margin-left: 5px;
 }
 
+.m-l-15 {
+  margin-left: 15px;
+}
+
+.spacer {
+  flex: 1 1 0%;
+  box-sizing: border-box;
+}
+
+.p-card {
+  box-shadow: none;
+  border: 1px solid #ededed;
+}
+
+/* nav */
 .nav-bar {
   background: #f3f3f7;
   width: 100%;
@@ -47,7 +63,114 @@ body {
   }
 }
 
-.p-card {
-  box-shadow: none;
-  border: 1px solid #ededed;
+/* voice-recorder-wrap */
+.voice-recorder-wrap {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  border-radius: 6px;
+  overflow: hidden;
+  background: linear-gradient(45deg, #70289d 50%, #ff499f 100%);
+  color: #fff;
+  margin-bottom: 15px;
+  display: flex;
+  padding: 30px;
+  flex-flow: row wrap;
+  align-items: center;
+
+  .recorder-box {
+    display: flex;
+    margin: 0px 15px 0px;
+    .mic-btn {
+      width: 64px;
+      height: 64px;
+      color: #fff;
+      background: none;
+      border: 4px solid #fff;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: 0.15s linear;
+      i {
+        font-size: 24px;
+      }
+      &:hover {
+        transition: 0.15s linear;
+        transform: scale(1.05);
+      }
+    }
+  }
+
+  .mic-ani {
+    position: relative;
+    animation: mic-ani-key 2s infinite ease-in-out;
+  }
+
+  .mic-ani:before {
+    background: rgb(77 19 114 / 67%);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0px;
+    height: 0px;
+    border-radius: 100%;
+    animation: mic-ani-key-before 2s infinite ease-in-out;
+    content: "";
+  }
+
+  @keyframes mic-ani-key {
+    from {
+      transform: scale(1.1);
+    }
+    50% {
+      transform: none;
+    }
+    to {
+      transform: scale(1.1);
+    }
+  }
+
+  @keyframes mic-ani-key-before {
+    80% {
+      width: 128px;
+      height: 128px;
+      margin: -64px;
+      opacity: 0;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  .recorder-text {
+    color: #fff;
+    font-weight: 300;
+    font-size: 16px;
+    letter-spacing: -0.5px;
+    .recorder-time {
+      font-weight: 900;
+      color: #fffc00;
+    }
+  }
+
+  .recorder-option {
+    display: flex;
+    margin: 0px 15px 0px;
+    .option-btn {
+      width: 64px;
+      height: 64px;
+      color: #fff;
+      background: none;
+      border: 4px solid #fff;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: 0.15s linear;
+      i {
+        font-size: 24px;
+      }
+      &:hover {
+        transition: 0.15s linear;
+        transform: scale(1.05);
+      }
+    }
+  }
 }
