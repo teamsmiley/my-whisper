@@ -1,3 +1,4 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -23,7 +24,8 @@ export class VoiceRecorderComponent implements OnInit {
   constructor(
     private messageService: MessageService,
     private sanitizer: DomSanitizer,
-    private audioRecorderService: VoiceRecorderService
+    private audioRecorderService: VoiceRecorderService,
+    private http: HttpClient
   ) {
     this.asrFormGroup = new FormGroup({
       file: new FormControl(''),
@@ -47,14 +49,24 @@ export class VoiceRecorderComponent implements OnInit {
     this.fileUploadUrl = `${environment.ws_file_upload_url}`;
   }
 
-  onUpload(): void {
-    this.setFile(this.voiceData.title);
-    this.messageService.add({
-      severity: 'success',
-      summary: 'Success',
-      detail: 'Success Upload File!',
+  create(resource: any) {
+    return this.http
+      .post(this.fileUploadUrl, JSON.stringify(resource), {
+        headers: { 'Content-Type': 'application/json' },
+      })
+      .pipe();
+  }
+
+  upload() {
+    this.create(this.voiceData.title).subscribe(() => {
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'Success Upload File!',
+      });
     });
   }
+
   onErrorFileUpload() {
     this.messageService.add({
       severity: 'error',
