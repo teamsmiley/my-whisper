@@ -6,8 +6,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    # env:
-    #   working-directory: ./frontend
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -25,6 +23,7 @@ jobs:
           GITLAB_REPOSITORY: whisper-front-prod
           IMAGE_TAG: ${{ github.sha }}
         run: |
+          ls
           cd frontend
           docker build -t $GITLAB_REGISTRY/$GITLAB_REPOSITORY:$IMAGE_TAG -f Dockerfile-prod .
           docker tag $GITLAB_REGISTRY/$GITLAB_REPOSITORY:$IMAGE_TAG $GITLAB_REGISTRY/$GITLAB_REPOSITORY:latest
