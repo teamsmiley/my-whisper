@@ -54,34 +54,35 @@ jobs:
 
 ### backend
 
-      # - name: prod build, tag, and push image to gitlab ECR
-      #   env:
-      #     ECR_REGISTRY: gitlab.xgridcolo.com:5050/ecr
-      #     ECR_REPOSITORY: whisper-backend-prod
-      #     IMAGE_TAG: ${{ github.sha }}
-      #   run: |
-      #     docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile .
-      #     docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
-      #     docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-      #     docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+      - name: prod build, tag, and push image to gitlab ECR
+        env:
+          ECR_REGISTRY: gitlab.xgridcolo.com:5050/ecr
+          ECR_REPOSITORY: whisper-backend-prod
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          cd frontend
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile .
+          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
 
-      # ### C3
-      # - name: Checkout argocd
-      #   uses: actions/checkout@v2
-      #   with:
-      #     repository: teamsmiley/argocd-c3
-      #     token: ${{ secrets.PAT }}
+      ### C3
+      - name: Checkout argocd
+        uses: actions/checkout@v2
+        with:
+          repository: teamsmiley/argocd-c3
+          token: ${{ secrets.PAT }}
 
-      # - name: replace prod image version number to sha
-      #   run: |
-      #     cd apps/whisper-prod
-      #     sed "s/:latest/:${{ github.sha }}/g" 31.api.origin > 31.api.yml
+      - name: replace prod image version number to sha
+        run: |
+          cd apps/whisper-prod
+          sed "s/:latest/:${{ github.sha }}/g" 31.api.origin > 31.api.yml
 
-      # - name: Commit files
-      #   run: |
-      #     git config --local user.email "action@github.com"
-      #     git config --local user.name "GitHub Action"
-      #     git commit -am "push new tag"
-      #     git push
+      - name: Commit files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -am "push new tag"
+          git push
 
 
