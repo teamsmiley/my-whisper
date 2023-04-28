@@ -54,7 +54,7 @@ jobs:
           
 ### backend
 
-      - name: staging build, tag, and push image to gitlab ECR
+      - name: backend staging build, tag, and push image to gitlab ECR
         env:
           ECR_REGISTRY: gitlab.xgridcolo.com:5050/ecr
           ECR_REPOSITORY: whisper-backend-staging
@@ -67,18 +67,18 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
 
       ### C4
-      - name: Checkout argocd
+      - name: backend Checkout argocd
         uses: actions/checkout@v2
         with:
           repository: teamsmiley/argocd-c4
           token: ${{ secrets.PAT }}
 
-      - name: replace staging image version number to sha
+      - name: backend replace staging image version number to sha
         run: |
           cd apps/whisper-staging
           sed "s/:latest/:${{ github.sha }}/g" 31.api.origin > 31.api.yml
 
-      - name: Commit files
+      - name: backend Commit files
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"

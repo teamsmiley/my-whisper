@@ -54,7 +54,7 @@ jobs:
 
 ### backend
 
-      - name: prod build, tag, and push image to gitlab ECR
+      - name: backend prod build, tag, and push image to gitlab ECR
         env:
           ECR_REGISTRY: gitlab.xgridcolo.com:5050/ecr
           ECR_REPOSITORY: whisper-backend-prod
@@ -67,18 +67,18 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
 
       ### C3
-      - name: Checkout argocd
+      - name: backend Checkout argocd
         uses: actions/checkout@v2
         with:
           repository: teamsmiley/argocd-c3
           token: ${{ secrets.PAT }}
 
-      - name: replace prod image version number to sha
+      - name: backend replace prod image version number to sha
         run: |
           cd apps/whisper-prod
           sed "s/:latest/:${{ github.sha }}/g" 31.api.origin > 31.api.yml
 
-      - name: Commit files
+      - name: backend Commit files
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
