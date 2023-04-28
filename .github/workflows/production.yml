@@ -40,7 +40,7 @@ jobs:
           repository: teamsmiley/argocd-c3
           token: ${{ secrets.PAT }}
 
-      - name: replace prod image version number to sha
+      - name: replace production image version number to sha
         run: |
           cd apps/whisper-prod
           sed "s/:latest/:${{ github.sha }}/g" 32.www.origin > 32.www.yml
