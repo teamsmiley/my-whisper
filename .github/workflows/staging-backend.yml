@@ -2,6 +2,8 @@ name: staging
 on:
   push:
     branches: [dev]
+    paths:
+      - 'backend/**'
 jobs:
   build:
     runs-on: ubuntu-latest
