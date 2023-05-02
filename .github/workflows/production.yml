@@ -51,6 +51,9 @@ jobs:
 
 ### backend
 
+      - name: backend Checkout
+        uses: actions/checkout@v2
+
       - name: backend prod build, tag, and push image to gitlab ECR
         env:
           ECR_REGISTRY: gitlab.xgridcolo.com:5050/ecr
