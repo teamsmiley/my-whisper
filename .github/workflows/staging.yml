@@ -22,6 +22,7 @@ jobs:
           ECR_REPOSITORY: whisper-front-staging
           IMAGE_TAG: ${{ github.sha }}
         run: |
+          ls
           cd frontend
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile-staging .
           docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
@@ -56,7 +57,8 @@ jobs:
           ECR_REPOSITORY: whisper-backend-staging
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          cd frontend
+          ls
+          cd backend
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile .
           docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
