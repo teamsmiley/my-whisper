@@ -3,71 +3,37 @@ import { Subject, Observable } from 'rxjs';
 import * as RecordRTC from 'recordrtc';
 import * as moment from 'moment';
 
-interface VoiceRecorderOutput {
-  blob: Blob;
-  title: string;
-}
-
 @Injectable()
 export class VoiceRecorderService {
   private stream;
   private recorder;
   private interval;
   private startTime;
-  private _recorded = new Subject<VoiceRecorderOutput>();
   private _recorderTime = new Subject<string>();
-  private _recorderFail = new Subject<string>();
-
-  getRecorderBlob(): Observable<VoiceRecorderOutput> {
-    return this._recorded.asObservable();
-  }
 
   getRecorderTime(): Observable<string> {
     return this._recorderTime.asObservable();
   }
 
-  recorderFail(): Observable<string> {
-    return this._recorderFail.asObservable();
-  }
-
   startRecorder() {
-    if (this.recorder) {
-      return;
-    }
-
     this._recorderTime.next('00:00');
-    navigator.mediaDevices
-      .getUserMedia({ audio: true })
-      .then((s) => {
-        this.stream = s;
-        this.record();
-      })
-      .catch((error) => {
-        this._recorderFail.next('');
+    navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+      this.stream = stream;
+      this.recorder = RecordRTC(stream, {
+        type: 'audio',
       });
-  }
-
-  abortRecorder() {
-    this.stopMedia();
-  }
-
-  private record() {
-    this.recorder = new RecordRTC.StereoAudioRecorder(this.stream, {
-      type: 'audio',
-      mimeType: 'audio/webm',
+      this.recorder.startRecording();
+      this.startTime = moment();
+      this.interval = setInterval(() => {
+        const currentTime = moment();
+        const diffTime = moment.duration(currentTime.diff(this.startTime));
+        const time =
+          this.toString(diffTime.minutes()) +
+          ':' +
+          this.toString(diffTime.seconds());
+        this._recorderTime.next(time);
+      }, 1000);
     });
-
-    this.recorder.record();
-    this.startTime = moment();
-    this.interval = setInterval(() => {
-      const currentTime = moment();
-      const diffTime = moment.duration(currentTime.diff(this.startTime));
-      const time =
-        this.toString(diffTime.minutes()) +
-        ':' +
-        this.toString(diffTime.seconds());
-      this._recorderTime.next(time);
-    }, 1000);
   }
 
   private toString(value) {
@@ -78,34 +44,16 @@ export class VoiceRecorderService {
   }
 
   stopRecorder() {
-    if (this.recorder) {
-      this.recorder.stop(
-        (blob) => {
-          if (this.startTime) {
-            const mp3Name = encodeURIComponent(
-              'audio_' + new Date().getTime() + '.mp3'
-            );
-            this.stopMedia();
-            this._recorded.next({ blob: blob, title: mp3Name });
-          }
-        },
-        () => {
-          this.stopMedia();
-          this._recorderFail.next('');
-        }
-      );
-    }
-  }
-
-  private stopMedia() {
-    if (this.recorder) {
-      this.recorder = null;
-      clearInterval(this.interval);
-      this.startTime = null;
-      if (this.stream) {
-        this.stream.getAudioTracks().forEach((track) => track.stop());
-        this.stream = null;
-      }
-    }
+    this.recorder.stopRecording(() => {
+      const blob = this.recorder.getBlob();
+      const recordedAudioURL = URL.createObjectURL(blob);
+      const formData = new FormData();
+      formData.append('audio', blob, 'audio.webm');
+      fetch('http://whisper/asr', {
+        method: 'POST',
+        body: formData,
+      });
+      this.stream.getTracks().forEach((track) => track.stop());
+    });
   }
 }

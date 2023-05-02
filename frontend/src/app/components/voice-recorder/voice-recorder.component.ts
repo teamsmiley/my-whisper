@@ -14,6 +14,7 @@ export class VoiceRecorderComponent implements OnInit {
   recordedTime;
   blobUrl;
   voiceData;
+  recordedAudioURL;
 
   fileUploadUrl: string;
 
@@ -23,101 +24,34 @@ export class VoiceRecorderComponent implements OnInit {
 
   constructor(
     private messageService: MessageService,
-    private sanitizer: DomSanitizer,
-    private audioRecorderService: VoiceRecorderService,
-    private http: HttpClient
+    private audioRecorderService: VoiceRecorderService
   ) {
     this.asrFormGroup = new FormGroup({
-      file: new FormControl(''),
-    });
-
-    this.audioRecorderService
-      .recorderFail()
-      .subscribe(() => (this.isRecorder = false));
-    this.audioRecorderService
-      .getRecorderTime()
-      .subscribe((time) => (this.recordedTime = time));
-    this.audioRecorderService.getRecorderBlob().subscribe((data) => {
-      this.voiceData = data;
-      this.blobUrl = this.sanitizer.bypassSecurityTrustUrl(
-        URL.createObjectURL(data.blob)
-      );
+      audio_file: new FormControl(''),
     });
   }
 
   ngOnInit() {
+    this.audioRecorderService
+      .getRecorderTime()
+      .subscribe((time) => (this.recordedTime = time));
     this.fileUploadUrl = `${environment.ws_file_upload_url}`;
   }
 
-  create(resource: any) {
-    return this.http
-      .post(this.fileUploadUrl, JSON.stringify(resource), {
-        headers: { 'Content-Type': 'application/json' },
-      })
-      .pipe();
-  }
-
-  upload() {
-    this.create(this.voiceData.title).subscribe(() => {
-      this.messageService.add({
-        severity: 'success',
-        summary: 'Success',
-        detail: 'Success Upload File!',
-      });
-    });
-  }
-
-  onErrorFileUpload() {
-    this.messageService.add({
-      severity: 'error',
-      summary: 'Error',
-      detail: 'File Not Uploaded.',
-    });
-  }
-
   startRecorder() {
-    if (!this.isRecorder) {
-      this.isRecorder = true;
-      this.audioRecorderService.startRecorder();
-    }
+    this.isRecorder = true;
+    this.audioRecorderService.startRecorder();
   }
-
-  abortRecorder() {
-    if (this.isRecorder) {
-      this.isRecorder = false;
-      this.audioRecorderService.abortRecorder();
-    }
-  }
-
   stopRecorder() {
-    if (this.isRecorder) {
-      this.audioRecorderService.stopRecorder();
-      this.isRecorder = false;
-    }
+    this.isRecorder = false;
+    this.audioRecorderService.stopRecorder();
   }
 
-  clearRecordedData() {
-    this.blobUrl = null;
+  get audioFile() {
+    return this.asrFormGroup.get('audio_file');
   }
 
-  ngOnDestroy(): void {
-    this.abortRecorder();
-  }
-
-  download(): void {
-    const url = window.URL.createObjectURL(this.voiceData.blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = this.voiceData.title;
-    console.log('cccccc', link.href, link.download);
-    link.click();
-  }
-
-  get file() {
-    return this.asrFormGroup.get('file');
-  }
-
-  setFile(value: any) {
-    this.file.setValue(value);
+  setAudioFile(value: any) {
+    this.audioFile.setValue(value);
   }
 }
