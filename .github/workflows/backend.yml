@@ -7,10 +7,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Exit if not on main branch
-        if: endsWith(github.ref, 'main') == false
-        run: exit 0
-
       - name: Checkout
         uses: actions/checkout@v2
 
