@@ -3,4 +3,4 @@ setuptools-rust==1.5.2
 fastapi[all]==0.95.1
 uvicorn[standard]==0.21.1
 webservices
-gunicorn==20.1.0
+# gunicorn==20.1.0
