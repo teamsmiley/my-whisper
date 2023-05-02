@@ -13,13 +13,13 @@ jobs:
       - name: Login to Gitlab
         uses: docker/login-action@v1
         with:
-          registry: gitlab.xgridcolo.com:5050
+          registry: ${{ secrets.registry }}
           username: ${{ secrets.GITLAB_USERNAME }}
           password: ${{ secrets.GITLAB_PASSWORD }}
 
       - name: prod build, tag, and push image to gitlab ECR
         env:
-          GITLAB_REGISTRY: gitlab.xgridcolo.com:5050/ecr
+          GITLAB_REGISTRY: ${{ secrets.registry }}/ecr
           GITLAB_REPOSITORY: whisper-front-prod
           IMAGE_TAG: ${{ github.sha }}
         run: |
@@ -52,7 +52,7 @@ jobs:
 
       - name: backend prod build, tag, and push image to gitlab ECR
         env:
-          ECR_REGISTRY: gitlab.xgridcolo.com:5050/ecr
+          ECR_REGISTRY: ${{secrets.registry}}/ecr
           ECR_REPOSITORY: whisper-backend-prod
           IMAGE_TAG: ${{ github.sha }}
         run: |
