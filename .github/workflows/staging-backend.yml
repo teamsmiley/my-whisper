@@ -1,7 +1,7 @@
 name: staging
 on:
   push:
-    # branches: [deploy]
+    # branches: [dev]
     paths:
       - 'backend/**'
     tags:
