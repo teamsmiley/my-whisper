@@ -51,15 +51,8 @@ jobs:
           
 ### backend
 
-      - name: Checkout
+      - name: backend Checkout
         uses: actions/checkout@v2
-
-      - name: Login to Gitlab
-        uses: docker/login-action@v1
-        with:
-          registry: gitlab.xgridcolo.com:5050
-          username: ${{ secrets.GITLAB_USERNAME }}
-          password: ${{ secrets.GITLAB_PASSWORD }}
 
       - name: backend staging build, tag, and push image to gitlab ECR
         env:
