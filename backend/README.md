@@ -27,5 +27,3 @@ from 2:50 sec mp3 file
 ## docs
 
 <https://teamsmiley.gitbook.io/devops/ai/whisper>
-
-##
