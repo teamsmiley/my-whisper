@@ -1,7 +1,7 @@
 name: production
 on:
   push:
-    branches: [release-deploy]
+    branches: [prod-deploy]
     paths:
       - 'frontend/**'
 
