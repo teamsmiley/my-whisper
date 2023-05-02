@@ -4,6 +4,7 @@ on:
     branches: [dev]
     paths:
       - 'backend/**'
+      - '.github/**'
 jobs:
   build:
     runs-on: ubuntu-latest
