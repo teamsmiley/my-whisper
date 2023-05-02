@@ -1,7 +1,7 @@
 name: staging
 on:
   push:
-    branches: [dev]
+    branches: [deploy]
     paths:
       - 'frontend/**'
 jobs:
