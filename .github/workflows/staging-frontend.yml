@@ -1,9 +1,11 @@
 name: staging
 on:
   push:
-    branches: [deploy]
+    # branches: [deploy]
     paths:
       - 'frontend/**'
+    tags:
+      - '*'
 jobs:
   build:
     runs-on: ubuntu-latest

@@ -1,9 +1,11 @@
 name: production
 on:
   push:
-    branches: [prod-deploy]
+    # branches: [prod-deploy]
     paths:
       - 'frontend/**'
+    tags:
+      - '*'
 
 jobs:
   build:
