@@ -12,16 +12,17 @@ jobs:
       - name: Login to Gitlab
         uses: docker/login-action@v1
         with:
-          registry: ${{ secrets.registry }}
+          registry: gitlab.xgridcolo.com:5050
           username: ${{ secrets.GITLAB_USERNAME }}
           password: ${{ secrets.GITLAB_PASSWORD }}
 
       - name: staging build, tag, and push image to gitlab ECR
         env:
-          ECR_REGISTRY: ${{ secrets.registry }}/ecr
+          ECR_REGISTRY: gitlab.xgridcolo.com:5050/ecr
           ECR_REPOSITORY: whisper-front-staging
           IMAGE_TAG: ${{ github.sha }}
         run: |
+          ls
           cd frontend
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile-staging .
           docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
@@ -47,15 +48,19 @@ jobs:
           git commit -am "push new tag"
           git push
 
-      ### backend
+          
+### backend
+
+      - name: backend Checkout
+        uses: actions/checkout@v2
 
       - name: backend staging build, tag, and push image to gitlab ECR
         env:
-          ECR_REGISTRY: ${{ secrets.registry }}/ecr
+          ECR_REGISTRY: gitlab.xgridcolo.com:5050/ecr
           ECR_REPOSITORY: whisper-backend-staging
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          cd ../backend
+          cd backend
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile .
           docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG

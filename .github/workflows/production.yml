@@ -23,6 +23,7 @@ jobs:
           GITLAB_REPOSITORY: whisper-front-prod
           IMAGE_TAG: ${{ github.sha }}
         run: |
+          ls
           cd frontend
           docker build -t $GITLAB_REGISTRY/$GITLAB_REPOSITORY:$IMAGE_TAG -f Dockerfile-prod .
           docker tag $GITLAB_REGISTRY/$GITLAB_REPOSITORY:$IMAGE_TAG $GITLAB_REGISTRY/$GITLAB_REPOSITORY:latest
@@ -48,7 +49,10 @@ jobs:
           git commit -am "push new tag"
           git push
 
-      ### backend
+### backend
+
+      - name: backend Checkout
+        uses: actions/checkout@v2
 
       - name: backend prod build, tag, and push image to gitlab ECR
         env:
@@ -56,7 +60,7 @@ jobs:
           ECR_REPOSITORY: whisper-backend-prod
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          cd ../backend
+          cd backend
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f Dockerfile .
           docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
@@ -80,3 +84,4 @@ jobs:
           git config --local user.name "GitHub Action"
           git commit -am "push new tag"
           git push
+
