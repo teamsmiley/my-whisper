@@ -1,4 +1,4 @@
-name: staging
+name: frontend
 on:
   push:
     branches: [main]
