@@ -155,3 +155,26 @@ async def heavy_data_processing(data: dict):
     message_processed = data.get("message", "").upper()
     return message_processed
 
+
+@app.websocket("/asr")
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+
+    while True:
+        try:
+            # Receive the JSON data sent by a client.
+            data = await websocket.receive_json()
+            # Some (fake) heavey data processing logic.
+            logger.info("received data: "+data.get("message", ""))
+            message_processed = await heavy_data_processing(data)
+            # Send JSON data to the client.
+            await websocket.send_json(
+                {
+                    "message": message_processed,
+                    "time": datetime.now().strftime("%H:%M:%S"),
+                }
+            )
+        except WebSocketDisconnect:
+            logger.info("The connection is closed.")
+            break
+

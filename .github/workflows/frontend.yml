@@ -1,10 +1,10 @@
 name: frontend
 on:
   push:
-    # paths:
-    #   - 'frontend/**'
-    tags:
-      - 'frontend*'
+    paths:
+      - 'frontend/**'
+    # tags:
+    #   - 'frontend*'
 jobs:
   build:
     runs-on: ubuntu-latest

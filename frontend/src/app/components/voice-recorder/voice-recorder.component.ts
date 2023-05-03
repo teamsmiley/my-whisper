@@ -5,6 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { MessageService } from 'primeng/api';
 import { environment } from 'src/environments/environment';
 import * as RecordRTC from 'recordrtc';
+import { WebSocketService } from 'src/app/services/web-socket.service';
 @Component({
   selector: 'app-voice-recorder',
   templateUrl: './voice-recorder.component.html',
@@ -27,8 +28,10 @@ export class VoiceRecorderComponent implements OnInit {
 
   constructor(
     private messageService: MessageService,
-    private http: HttpClient
+    private http: HttpClient,
+    public wsService: WebSocketService
   ) {
+    this.wsService.connect();
     this.asrFormGroup = new FormGroup({
       audio_file: new FormControl(''),
     });
@@ -57,20 +60,27 @@ export class VoiceRecorderComponent implements OnInit {
       this.stream.getAudioTracks().forEach((track) => track.stop());
       this.stream = null;
       console.log('aaaa', mp3Name);
-      const formData = new FormData();
-      formData.append('audio_file', mp3Name);
-      fetch(this.fileUploadUrl, {
-        method: 'POST',
-        body: formData,
-      });
+
+      // server로 보냄
+      // const formData = new FormData();
+      // formData.append('audio_file', mp3Name);
+      // fetch(this.fileUploadUrl, {
+      //   method: 'POST',
+      //   body: formData,
+      // });
+      this.sendAudio(blob);
     });
   }
 
-  get audioFile() {
-    return this.asrFormGroup.get('audio_file');
-  }
+  // get audioFile() {
+  //   return this.asrFormGroup.get('audio_file');
+  // }
 
-  setAudioFile(value: any) {
-    this.audioFile.setValue(value);
+  // setAudioFile(value: any) {
+  //   this.audioFile.setValue(value);
+  // }
+
+  sendAudio(sound: any) {
+    this.wsService.sendMessage(sound);
   }
 }
