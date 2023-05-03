@@ -27,8 +27,8 @@ import { VoiceRecorderComponent } from './components/voice-recorder/voice-record
     SharedModule,
     HttpClientModule,
     AuthModule.forRoot({
-      domain: 'ai-whisper.us.auth0.com',
-      clientId: 'nPx6xQSIOl4ChE96B6zTdsCADq4Nxnsn',
+      domain: 'whisper-ai.us.auth0.com',
+      clientId: 'Ht4maVjBL5PoXF2VVFMrGoa6iTvSKhDp',
       authorizationParams: {
         redirect_uri: window.location.origin,
       },
