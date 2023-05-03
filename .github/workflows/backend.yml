@@ -1,8 +1,10 @@
 name: backend
 on:
   push:
-    paths:
-      - 'backend/**'
+    # paths:
+    #   - 'backend/**'
+    tags:
+      - 'backend*'
 jobs:
   build:
     runs-on: ubuntu-latest
