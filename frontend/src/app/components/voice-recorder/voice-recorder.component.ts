@@ -72,13 +72,13 @@ export class VoiceRecorderComponent implements OnInit {
     });
   }
 
-  // get audioFile() {
-  //   return this.asrFormGroup.get('audio_file');
-  // }
+  get audioFile() {
+    return this.asrFormGroup.get('audio_file');
+  }
 
-  // setAudioFile(value: any) {
-  //   this.audioFile.setValue(value);
-  // }
+  setAudioFile(value: any) {
+    this.audioFile.setValue(value);
+  }
 
   sendAudio(sound: any) {
     this.wsService.sendMessage(sound);
