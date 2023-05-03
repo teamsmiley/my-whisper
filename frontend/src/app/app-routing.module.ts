@@ -18,12 +18,12 @@ const routes: Routes = [
   {
     path: 'upload',
     component: AsrComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
   {
     path: 'voice-recorder',
     component: VoiceRecorderComponent,
-    canActivate: [AuthGuard],
+    // canActivate: [AuthGuard],
   },
 ];
 
