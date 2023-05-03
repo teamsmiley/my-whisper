@@ -19,7 +19,7 @@ jobs:
           username: ${{ secrets.GITLAB_USERNAME }}
           password: ${{ secrets.GITLAB_PASSWORD }}
 
-      - name: backend staging build, tag, and push image to gitlab ECR
+      - name: backend build, tag, and push image to gitlab ECR
         env:
           ECR_REGISTRY: gitlab.xgridcolo.com:5050/ecr
           ECR_REPOSITORY: whisper-backend-staging
@@ -37,7 +37,7 @@ jobs:
           repository: teamsmiley/argocd-c3
           token: ${{ secrets.PAT }}
 
-      - name: backend replace staging image version number to sha
+      - name: backend replace image version number to sha
         run: |
           cd apps/whisper-staging
           sed "s/:latest/:${{ github.sha }}/g" 31.api.origin > 31.api.yml
