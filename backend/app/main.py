@@ -137,7 +137,7 @@ async def websocket_endpoint(websocket: WebSocket):
             data = await websocket.receive_json()
             # Some (fake) heavey data processing logic.
             logger.info("received data: "+data.get("message", ""))
-            message_processed = await heavy_data_processing(data)
+            # message_processed = await heavy_data_processing(data)
             # Send JSON data to the client.
             await websocket.send_json(
                 {
@@ -149,11 +149,11 @@ async def websocket_endpoint(websocket: WebSocket):
             logger.info("The connection is closed.")
             break
 
-async def heavy_data_processing(data: dict):
-    """Some (fake) heavy data processing logic."""
-    # await asyncio.sleep(2)
-    message_processed = data.get("message", "").upper()
-    return message_processed
+# async def heavy_data_processing(data: dict):
+#     """Some (fake) heavy data processing logic."""
+#     # await asyncio.sleep(2)
+#     message_processed = data.get("message", "").upper()
+#     return message_processed
 
 
 @app.websocket("/asr")
@@ -163,14 +163,14 @@ async def websocket_endpoint(websocket: WebSocket):
     while True:
         try:
             # Receive the JSON data sent by a client.
-            data = await websocket.receive_json()
+            data = await websocket.receive_blob() #???
             # Some (fake) heavey data processing logic.
-            logger.info("received data: "+data.get("message", ""))
-            message_processed = await heavy_data_processing(data)
+            logger.info("received data: blob" )
+
             # Send JSON data to the client.
             await websocket.send_json(
                 {
-                    "message": message_processed,
+                    "message": "received data: blob",
                     "time": datetime.now().strftime("%H:%M:%S"),
                 }
             )
