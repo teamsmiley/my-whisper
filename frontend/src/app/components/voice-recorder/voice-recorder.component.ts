@@ -2,7 +2,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
-import { MessageService } from 'primeng/api';
 import { environment } from 'src/environments/environment';
 import * as RecordRTC from 'recordrtc';
 import { WebSocketService } from 'src/app/services/web-socket.service';
@@ -12,10 +11,8 @@ import { WebSocketService } from 'src/app/services/web-socket.service';
 })
 export class VoiceRecorderComponent implements OnInit {
   isRecorder = false;
-  recordedTime;
   blobUrl;
-  voiceData;
-  recordedAudioURL;
+  audioURL;
 
   fileUploadUrl: string;
 
@@ -25,11 +22,12 @@ export class VoiceRecorderComponent implements OnInit {
 
   stream: MediaStream;
   recordRTC: RecordRTC;
+  blob: Blob;
+  audioBlob: Blob;
 
   constructor(
-    private messageService: MessageService,
-    private http: HttpClient,
-    public wsService: WebSocketService
+    public wsService: WebSocketService,
+    private sanitizer: DomSanitizer
   ) {
     this.wsService.connect();
     this.asrFormGroup = new FormGroup({
@@ -57,19 +55,33 @@ export class VoiceRecorderComponent implements OnInit {
     this.isRecorder = false;
     this.recordRTC.stop((blob) => {
       const mp3Name = encodeURIComponent(new Date().getTime() + '.mp3');
+      const audioURL = URL.createObjectURL(blob);
       this.stream.getAudioTracks().forEach((track) => track.stop());
-      this.stream = null;
-      console.log('aaaa', mp3Name);
-
-      // server로 보냄
+      //this.stream = null;
+      //server로 보냄
       // const formData = new FormData();
-      // formData.append('audio_file', mp3Name);
+      // formData.append('audio_file', blob, mp3Name);
       // fetch(this.fileUploadUrl, {
       //   method: 'POST',
       //   body: formData,
       // });
-      this.sendAudio(blob);
+      // this.sendAudio(blob);
+      console.log('88888', audioURL);
+      this.blobUrl = true;
     });
+  }
+
+  wwwUpload(audioURL: any) {
+    const formData = new FormData();
+    formData.append('audio_file', audioURL);
+    fetch(this.fileUploadUrl, {
+      method: 'POST',
+      body: formData,
+    });
+  }
+
+  wsUpload(audioURL: any) {
+    this.sendAudio(audioURL);
   }
 
   get audioFile() {
