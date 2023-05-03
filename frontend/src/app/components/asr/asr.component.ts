@@ -38,6 +38,7 @@ export class AsrComponent implements OnInit {
       detail: 'Success Upload File!',
     });
   }
+
   onErrorFileUpload() {
     this.messageService.add({
       severity: 'error',
