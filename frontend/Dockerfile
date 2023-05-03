@@ -15,7 +15,6 @@ RUN npm run build:production
 FROM nginx:alpine
 COPY --from=builder /app/dist/whisper-frontend/ /usr/share/nginx/html/
 
-COPY ./nginx-prod.conf /etc/nginx/conf.d/default.conf
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
-
