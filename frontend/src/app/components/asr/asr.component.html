@@ -1,38 +1,31 @@
-<div class="p-fileUpload-all-in-one-wrap">
-  <p-fileUpload
-    name="audio_file"
-    url="{{ fileUploadUrl }}"
-    (onUpload)="onUpload($event, 'file')"
-    (onError)="onErrorFileUpload()"
-    [multiple]="false"
-    accept="{{ acceptedFiles }}"
-    [maxFileSize]="100971520"
-    chooseLabel="File Select"
-    [showUploadButton]="true"
-    [showCancelButton]="false"
-    [auto]="false"
-    chooseIcon="pi pi-plus"
-  >
-    <ng-template pTemplate="content">
-      <ul *ngIf="uploadedFiles?.length">
-        <li *ngFor="let file of uploadedFiles">
-          {{ file.name }} - {{ file.size }} bytes
-        </li>
-      </ul>
-      <p *ngIf="!file.value" class="drag-text">
-        Drag file to this area to upload.
-      </p>
-    </ng-template>
-  </p-fileUpload>
-</div>
+<form class="form" [formGroup]="asrFormGroup">
+  <div class="upload-wrapper">
+    <div class="upload-input" [attr.data-text]="fileText">
+      <input
+        type="file"
+        id="audio_file"
+        name="audio_file"
+        accept="audio/*"
+        (change)="selectedFiles($event)"
+      />
+    </div>
+    <div class="upload-btn">
+      <p-button
+        label="UPLOAD"
+        styleClass="p-button-lg p-button-success m-l-5"
+        (click)="submit()"
+      ></p-button>
+    </div>
+  </div>
+</form>
 <p-card>
-  <ng-container *ngIf="!file.value">
+  <ng-container *ngIf="!audioFile.value">
     <p-message
       severity="info"
       text="Execution results are displayed here."
     ></p-message>
   </ng-container>
 
-  <p><b>Language : </b>{{ file.value.language || "..." }}</p>
-  <p><b>Text : </b>{{ file.value.text || "..." }}</p>
+  <p><b>Language : </b>{{ audioFile.value.language || "..." }}</p>
+  <p><b>Text : </b>{{ audioFile.value.text || "..." }}</p>
 </p-card>
