@@ -1,8 +1,5 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
-import { environment } from 'src/environments/environment';
 import * as RecordRTC from 'recordrtc';
 import { WebSocketService } from 'src/app/services/web-socket.service';
 import { AsrService } from 'src/app/services/asr.service';
@@ -13,7 +10,7 @@ import { AsrService } from 'src/app/services/asr.service';
 export class VoiceRecorderComponent implements OnInit {
   isRecorder = false;
   asrFormGroup: FormGroup;
-  resultASR: any = null;
+  resultASR: any;
 
   stream: MediaStream;
   recordRTC: RecordRTC;
@@ -59,11 +56,14 @@ export class VoiceRecorderComponent implements OnInit {
     });
   }
 
-  wwwUpload() {
-    console.log('upload form');
+  uploadHttp() {
+    this.service.uploadAsr(this.asrFormGroup.value).subscribe((result) => {
+      console.log(result);
+      this.resultASR = result;
+    });
   }
 
-  wsUpload() {
+  uploadWebSocket() {
     console.log('upload form');
     // this.wsService.sendMessage(sound);
   }

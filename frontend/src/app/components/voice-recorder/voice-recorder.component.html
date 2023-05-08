@@ -18,11 +18,11 @@
   <ng-container>
     <div class="spacer"></div>
     <div class="recorder-option">
-      <button class="option-btn m-l-15" id="button" (click)="wwwUpload()">
+      <button class="option-btn m-l-15" id="button" (click)="uploadHttp()">
         <i class="pi pi-upload"></i> www
       </button>
-      <button class="option-btn m-l-15" id="button" (click)="wsUpload()">
-        <i class="pi pi-upload"></i> WS
+      <button class="option-btn m-l-15" id="button" (click)="uploadWebSocket()">
+        <i class="pi pi-upload"></i> WebSocket
       </button>
     </div>
   </ng-container>
@@ -35,6 +35,6 @@
     ></p-message>
   </ng-container>
 
-  <p><b>Language : </b>{{ resultASR.language || "..." }}</p>
-  <p><b>Text : </b>{{ resultASR.text || "..." }}</p>
+  <p><b>Language : </b>{{ resultASR ? ["language"] : "..." }}</p>
+  <p><b>Text : </b>{{ resultASR ? ["text"] : "..." }}</p>
 </p-card>

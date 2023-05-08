@@ -9,23 +9,19 @@ import { environment } from 'src/environments/environment';
   templateUrl: './asr.component.html',
 })
 export class AsrComponent implements OnInit {
-  fileUploadUrl: string;
   asrFormGroup: FormGroup;
 
   fileName: string;
-  resultASR: any = null;
-
-  files: File[] = [];
+  resultASR: any;
 
   constructor(private service: AsrService) {
     this.asrFormGroup = new FormGroup({
+      email: new FormControl('test@gmail.com'),
       audio_file: new FormControl(''),
     });
   }
 
-  ngOnInit() {
-    this.fileUploadUrl = `${environment.file_upload_url}`;
-  }
+  ngOnInit() {}
 
   get audioFile() {
     return this.asrFormGroup.get('audio_file');
@@ -40,16 +36,14 @@ export class AsrComponent implements OnInit {
     this.fileName = fileInput.value.replace(/.*(\/|\\)/, '');
 
     if (event.target.files.length > 0) {
-      this.files = this.files.concat([...event.target.files]);
+      this.audioFile.setValue(event.target.files[0]);
     }
   }
 
   submit() {
-    for (let i = 0; i < this.files.length; i++) {
-      this.service.uploadAsr(this.files[i]).subscribe((result) => {
-        console.log(result);
-        this.resultASR = result;
-      });
-    }
+    this.service.uploadAsr(this.asrFormGroup.value).subscribe((result) => {
+      console.log(result);
+      this.resultASR = result;
+    });
   }
 }

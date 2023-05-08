@@ -45,13 +45,29 @@ export class DataService {
       .pipe(catchError(this.handleError));
   }
 
-  createWithBinary(formData: any) {
+  createWithBinary(resource: any) {
     return this.http
-      .post(this.url, formData, {
+      .post(this.url, this.toFormData(resource), {
         reportProgress: true,
         observe: 'events',
       })
-      .pipe(catchError(this.handleError));
+      .pipe(
+        map((res) => {
+          return res['body'];
+        }),
+        catchError(this.handleError)
+      );
+  }
+
+  toFormData<T>(formValue: T) {
+    const formData = new FormData();
+
+    for (const key of Object.keys(formValue)) {
+      const value = formValue[key];
+      formData.append(key, value);
+    }
+
+    return formData;
   }
 
   toQueryString(obj: any) {

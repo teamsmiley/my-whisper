@@ -23,9 +23,7 @@ export class AsrService extends DataService {
     return super.create(resource);
   }
 
-  uploadAsr(file: File) {
-    const formData: FormData = new FormData();
-    formData.append('audio_file', file);
-    return super.createWithBinary(formData);
+  uploadAsr(resource: any) {
+    return super.createWithBinary(resource);
   }
 }
