@@ -4,4 +4,5 @@ export const environment = {
   // file_upload_url: 'http://whisper/asr',
   ws_url: 'ws://localhost/messages',
   file_upload_url: 'http://localhost/asr',
+  ws_file_upload_url: 'ws://localhost/asr',
 };

@@ -12,15 +12,12 @@ export class AsrComponent implements OnInit {
   fileUploadUrl: string;
   asrFormGroup: FormGroup;
 
-  fileText: string;
+  fileName: string;
+  resultASR: any;
 
   files: File[] = [];
 
-  constructor(
-    private service: AsrService,
-    private messageService: MessageService,
-    private http: HttpClient
-  ) {
+  constructor(private service: AsrService) {
     this.asrFormGroup = new FormGroup({
       audio_file: new FormControl(''),
     });
@@ -39,10 +36,8 @@ export class AsrComponent implements OnInit {
   }
 
   selectedFiles(event) {
-    // 인풋에 사용할 파일 이름
     const fileInput = event.target as HTMLInputElement;
-    const fileName = fileInput.value.replace(/.*(\/|\\)/, '');
-    this.fileText = fileName;
+    this.fileName = fileInput.value.replace(/.*(\/|\\)/, '');
 
     if (event.target.files.length > 0) {
       this.files = this.files.concat([...event.target.files]);
@@ -51,12 +46,10 @@ export class AsrComponent implements OnInit {
 
   submit() {
     for (let i = 0; i < this.files.length; i++) {
-      //this.upload(i, this.files[i]);
-      this.service.uploadAsr(this.files[i]).subscribe();
+      this.service.uploadAsr(this.files[i]).subscribe((result) => {
+        console.log(result);
+        this.resultASR = result;
+      });
     }
   }
-
-  // upload(idx, file) {
-  //   this.service.uploadAsr(file).subscribe();
-  // }
 }

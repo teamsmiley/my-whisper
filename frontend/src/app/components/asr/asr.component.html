@@ -1,6 +1,6 @@
 <form class="form" [formGroup]="asrFormGroup">
   <div class="upload-wrapper">
-    <div class="upload-input" [attr.data-text]="fileText">
+    <div class="upload-input" [attr.data-text]="fileName">
       <input
         type="file"
         id="audio_file"
@@ -19,13 +19,13 @@
   </div>
 </form>
 <p-card>
-  <ng-container *ngIf="!audioFile.value">
+  <ng-container *ngIf="!resultASR.value">
     <p-message
       severity="info"
       text="Execution results are displayed here."
     ></p-message>
   </ng-container>
 
-  <p><b>Language : </b>{{ audioFile.value.language || "..." }}</p>
-  <p><b>Text : </b>{{ audioFile.value.text || "..." }}</p>
+  <p><b>Language : </b>{{ resultASR.value.language || "..." }}</p>
+  <p><b>Text : </b>{{ resultASR.value.text || "..." }}</p>
 </p-card>
