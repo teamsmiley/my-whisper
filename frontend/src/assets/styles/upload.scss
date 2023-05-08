@@ -72,3 +72,12 @@
     max-width: 140px;
   }
 }
+
+.p-fileUpload-all-in-one-wrap {
+  margin-bottom: 15px;
+  .p-fileupload {
+    .p-fileupload-content {
+      padding: 30px 20px;
+    }
+  }
+}

@@ -1,9 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MessageService } from 'primeng/api';
+import { FormControl, FormGroup } from '@angular/forms';
 import { AsrService } from 'src/app/services/asr.service';
-import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-asr',
   templateUrl: './asr.component.html',

@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import * as RecordRTC from 'recordrtc';
-import { WebSocketService } from 'src/app/services/web-socket.service';
 import { AsrService } from 'src/app/services/asr.service';
 import { WebSocketAsrService } from 'src/app/services/web-socket-asr.service';
 @Component({

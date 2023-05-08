@@ -12,12 +12,14 @@ import { HomeComponent } from './components/home/home.component';
 import { NavComponent } from './components/nav/nav.component';
 import { AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
 import { VoiceRecorderComponent } from './components/voice-recorder/voice-recorder.component';
+import { AsrPrimengComponent } from './components/asr-primeng/asr-primeng.component';
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
     HomeComponent,
     AsrComponent,
+    AsrPrimengComponent,
     VoiceRecorderComponent,
   ],
   imports: [

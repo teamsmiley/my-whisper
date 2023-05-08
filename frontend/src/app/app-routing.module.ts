@@ -4,6 +4,7 @@ import { AsrComponent } from './components/asr/asr.component';
 import { HomeComponent } from './components/home/home.component';
 import { AuthGuard } from '@auth0/auth0-angular';
 import { VoiceRecorderComponent } from './components/voice-recorder/voice-recorder.component';
+import { AsrPrimengComponent } from './components/asr-primeng/asr-primeng.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,11 @@ const routes: Routes = [
   {
     path: 'upload',
     component: AsrComponent,
+    // canActivate: [AuthGuard],
+  },
+  {
+    path: 'upload-primeng',
+    component: AsrPrimengComponent,
     // canActivate: [AuthGuard],
   },
   {
