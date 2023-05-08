@@ -1,5 +1,5 @@
 <div class="voice-recorder-wrap">
-  <ng-container *ngIf="!isRecorder && !blobUrl">
+  <ng-container *ngIf="!isRecorder">
     <div class="recorder-box">
       <button class="mic-btn" id="button" (click)="startRecorder()">
         <i class="pi pi-microphone"></i>
@@ -7,7 +7,7 @@
     </div>
     <div class="recorder-text">Click the mic to start recording.</div>
   </ng-container>
-  <ng-container *ngIf="isRecorder && !blobUrl">
+  <ng-container *ngIf="isRecorder">
     <div class="recorder-box">
       <button class="mic-btn mic-ani" id="button" (click)="stopRecorder()">
         <i class="pi pi-circle-fill"></i>
@@ -15,36 +15,26 @@
     </div>
     <div class="recorder-text">Stop recording.</div>
   </ng-container>
-  <ng-container *ngIf="blobUrl">
-    <!-- <audio controls>
-      <source [src]="blobUrl" type="audio/webm" />
-    </audio> -->
+  <ng-container>
     <div class="spacer"></div>
     <div class="recorder-option">
-      <!-- <button class="option-btn" id="button" (click)="playAudio()">
-        <i class="pi pi-trash"></i>
-      </button> -->
-      <button
-        class="option-btn m-l-15"
-        id="button"
-        (click)="wwwUpload(audioURL)"
-      >
+      <button class="option-btn m-l-15" id="button" (click)="wwwUpload()">
         <i class="pi pi-upload"></i> www
       </button>
-      <button class="option-btn m-l-15" id="button" (click)="wsUpload(blob)">
+      <button class="option-btn m-l-15" id="button" (click)="wsUpload()">
         <i class="pi pi-upload"></i> WS
       </button>
     </div>
   </ng-container>
 </div>
 <p-card>
-  <ng-container *ngIf="!audioFile.value">
+  <ng-container *ngIf="!resultASR.value">
     <p-message
       severity="info"
       text="Execution results are displayed here."
     ></p-message>
   </ng-container>
 
-  <p><b>Language : </b>{{ audioFile.value.language || "..." }}</p>
-  <p><b>Text : </b>{{ audioFile.value.text || "..." }}</p>
+  <p><b>Language : </b>{{ resultASR.value.language || "..." }}</p>
+  <p><b>Text : </b>{{ resultASR.value.text || "..." }}</p>
 </p-card>
