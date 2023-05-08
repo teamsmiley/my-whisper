@@ -1,6 +1,7 @@
 name: backend
 on:
   push:
+    branches: [main]
     # paths:
     #   - 'backend/**'
     tags:
