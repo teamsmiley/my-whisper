@@ -78,7 +78,6 @@ def transcribe(
         result = model.transcribe(audio, **options_dict)
     return result
 
-
 def load_audio(file: BinaryIO, sr: int = SAMPLE_RATE):
     """
     Open an audio file object and read as mono waveform, resampling as necessary.
@@ -127,17 +126,16 @@ def language_detection(
 
     return result
 
-@app.websocket("/ws")
+@app.websocket("/messages")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
-
     while True:
         try:
             # Receive the JSON data sent by a client.
             data = await websocket.receive_json()
             # Some (fake) heavey data processing logic.
             logger.info("received data: "+data.get("message", ""))
-            # message_processed = await heavy_data_processing(data)
+            message_processed = await heavy_data_processing(data)
             # Send JSON data to the client.
             await websocket.send_json(
                 {
@@ -149,12 +147,11 @@ async def websocket_endpoint(websocket: WebSocket):
             logger.info("The connection is closed.")
             break
 
-# async def heavy_data_processing(data: dict):
-#     """Some (fake) heavy data processing logic."""
-#     # await asyncio.sleep(2)
-#     message_processed = data.get("message", "").upper()
-#     return message_processed
-
+async def heavy_data_processing(data: dict):
+    """Some (fake) heavy data processing logic."""
+    # await asyncio.sleep(2)
+    message_processed = data.get("message", "").upper()
+    return message_processed
 
 @app.websocket("/asr")
 async def websocket_endpoint(websocket: WebSocket):
