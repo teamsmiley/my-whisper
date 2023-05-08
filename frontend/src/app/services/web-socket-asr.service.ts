@@ -27,7 +27,7 @@ export class WebSocketAsrService {
   }
 
   sendMessage(blob: Blob) {
-    this.socket$.next({ blob });
+    this.socket$.next(blob);
   }
 
   close() {
