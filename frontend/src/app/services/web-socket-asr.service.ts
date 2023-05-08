@@ -10,7 +10,7 @@ interface MessageData {
 @Injectable({
   providedIn: 'root',
 })
-export class WebSocketService {
+export class WebSocketAsrService {
   private socket$!: WebSocketSubject<any>;
   public receivedData: MessageData[] = [];
 
@@ -18,7 +18,7 @@ export class WebSocketService {
 
   public connect(): void {
     if (!this.socket$ || this.socket$.closed) {
-      this.socket$ = webSocket(environment.ws_url + '/messages');
+      this.socket$ = webSocket(environment.ws_url + '/asr');
 
       this.socket$.subscribe((data: MessageData) => {
         this.receivedData.push(data);
@@ -26,8 +26,9 @@ export class WebSocketService {
     }
   }
 
-  sendMessage(message: string) {
-    this.socket$.next({ message });
+  sendMessage(blob: any) {
+    console.log(blob);
+    this.socket$.next({ blob });
   }
 
   close() {
