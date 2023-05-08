@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as RecordRTC from 'recordrtc';
 import { WebSocketService } from 'src/app/services/web-socket.service';
@@ -8,27 +8,30 @@ import { WebSocketAsrService } from 'src/app/services/web-socket-asr.service';
   selector: 'app-voice-recorder',
   templateUrl: './voice-recorder.component.html',
 })
-export class VoiceRecorderComponent implements OnInit {
+export class VoiceRecorderComponent implements OnInit, OnDestroy {
   isRecorder = false;
   asrFormGroup: FormGroup;
   resultASR: any;
 
   stream: MediaStream;
   recordRTC: RecordRTC;
+  blob: Blob;
 
   constructor(
     //
-    public wsService: WebSocketService,
     public wsAsrService: WebSocketAsrService,
     private service: AsrService
   ) {
-    this.wsService.connect();
+    this.wsAsrService.connect();
     this.asrFormGroup = new FormGroup({
       audio_file: new FormControl(''),
     });
   }
-
   ngOnInit() {}
+
+  ngOnDestroy() {
+    this.wsAsrService.close();
+  }
 
   get audioFile() {
     return this.asrFormGroup.get('audio_file');
@@ -54,6 +57,7 @@ export class VoiceRecorderComponent implements OnInit {
     this.isRecorder = false;
     this.recordRTC.stop((blob) => {
       this.stream.getAudioTracks().forEach((track) => track.stop());
+      this.blob = blob;
       this.setAudioFile(blob);
     });
   }
@@ -65,6 +69,6 @@ export class VoiceRecorderComponent implements OnInit {
   }
 
   uploadWebSocket() {
-    this.wsAsrService.sendMessage(this.audioFile.value);
+    this.wsAsrService.sendMessage(this.blob);
   }
 }
