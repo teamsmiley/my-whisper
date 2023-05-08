@@ -19,11 +19,23 @@
     <div class="spacer"></div>
     <div class="recorder-option">
       <button class="option-btn m-l-15" id="button" (click)="uploadHttp()">
-        <i class="pi pi-upload"></i> www
+        <i class="pi pi-upload"></i> HTTP
       </button>
       <button class="option-btn m-l-15" id="button" (click)="uploadWebSocket()">
-        <i class="pi pi-upload"></i> WebSocket
+        <i class="pi pi-upload"></i> WS
       </button>
     </div>
   </ng-container>
 </div>
+<p-card>
+  <ng-container *ngIf="!resultASR; else elseResultASR">
+    <p-message
+      severity="info"
+      text="Execution results are displayed here."
+    ></p-message>
+  </ng-container>
+  <ng-template #elseResultASR>
+    <p><b>Language : </b>{{ resultASR?.language }}</p>
+    <p><b>Text : </b>{{ resultASR?.text }}</p>
+  </ng-template>
+</p-card>

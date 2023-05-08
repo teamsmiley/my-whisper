@@ -15,8 +15,9 @@ export class AsrComponent implements OnInit {
   resultASR: any;
 
   constructor(private service: AsrService) {
+    //
     this.asrFormGroup = new FormGroup({
-      email: new FormControl('test@gmail.com'),
+      //email: new FormControl('test@gmail.com'),
       audio_file: new FormControl(''),
     });
   }

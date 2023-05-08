@@ -10,6 +10,7 @@ import { WebSocketAsrService } from 'src/app/services/web-socket-asr.service';
 })
 export class VoiceRecorderComponent implements OnInit, OnDestroy {
   isRecorder = false;
+
   asrFormGroup: FormGroup;
   resultASR: any;
 
