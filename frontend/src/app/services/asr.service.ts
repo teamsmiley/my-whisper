@@ -8,7 +8,7 @@ import { DataService } from './data.service';
 })
 export class AsrService extends DataService {
   constructor(http: HttpClient) {
-    super(environment.ws_file_upload_url, http);
+    super(environment.file_upload_url, http);
   }
 
   getAsrs(queryString?: any) {

@@ -27,7 +27,7 @@ export class AsrComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.fileUploadUrl = `${environment.ws_file_upload_url}`;
+    this.fileUploadUrl = `${environment.file_upload_url}`;
   }
 
   get audioFile() {
