@@ -19,13 +19,13 @@
   </div>
 </form>
 <p-card>
-  <ng-container *ngIf="!resultASR.value">
+  <ng-container *ngIf="!resultASR">
     <p-message
       severity="info"
       text="Execution results are displayed here."
     ></p-message>
   </ng-container>
 
-  <p><b>Language : </b>{{ resultASR.value.language || "..." }}</p>
-  <p><b>Text : </b>{{ resultASR.value.text || "..." }}</p>
+  <p><b>Language : </b>{{ resultASR.language || "..." }}</p>
+  <p><b>Text : </b>{{ resultASR.text || "..." }}</p>
 </p-card>

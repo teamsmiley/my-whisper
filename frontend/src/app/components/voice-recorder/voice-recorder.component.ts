@@ -13,7 +13,7 @@ import { AsrService } from 'src/app/services/asr.service';
 export class VoiceRecorderComponent implements OnInit {
   isRecorder = false;
   asrFormGroup: FormGroup;
-  resultASR: any;
+  resultASR: any = null;
 
   stream: MediaStream;
   recordRTC: RecordRTC;

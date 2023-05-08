@@ -13,7 +13,7 @@ export class AsrComponent implements OnInit {
   asrFormGroup: FormGroup;
 
   fileName: string;
-  resultASR: any;
+  resultASR: any = null;
 
   files: File[] = [];
 
