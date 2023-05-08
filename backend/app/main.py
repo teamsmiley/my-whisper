@@ -33,7 +33,7 @@ app.add_middleware(
 SAMPLE_RATE=16000
 LANGUAGE_CODES=sorted(list(tokenizer.LANGUAGES.keys()))
 
-model_name= os.getenv("ASR_MODEL", "base")
+model_name= os.getenv("ASR_MODEL", "medium")
 deviceType=""
 deviceName = ""
 
